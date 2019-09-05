@@ -5,9 +5,45 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#ffaaff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#e7e7e7",
+    "navigationBarTitleText": "莲雨宝小程序",
+    "navigationBarTextStyle": "black",
+    "onReachBottomDistance": 40 ,
+    "pageOrientation": "auto"
+  },
+  "tabBar": {
+    "color": "#171616",
+    "selectedColor": "#25c6e5",
+    "backgroundColor": "#e7e7e7",
+    "borderStyle": "white",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/icons/home_page_icon.png",
+        "selectedIconPath": "images/icons/home_page_icon_selected.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "购物车",
+        "iconPath": "images/icons/shopping_cart.png",
+        "selectedIconPath": "images/icons/shopping_cart_selected.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "资讯",
+        "iconPath": "images/icons/news.png",
+        "selectedIconPath": "images/icons/news_selected.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "我的",
+        "iconPath": "images/icons/mine.png",
+        "selectedIconPath": "images/icons/mine_selected.png"
+      }
+    ]
+
   },
   "sitemapLocation": "sitemap.json"
 }
