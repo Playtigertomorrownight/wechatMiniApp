@@ -1,6 +1,6 @@
 spring: 
   application:
-    name: template
+    name: smallrain-wechat
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://106.12.204.7:3306/template?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&useSSL=false
@@ -11,9 +11,19 @@ server:
   port: 8088
   tomcat:
     uri-encoding: UTF-8
-    max-threads: 400
-    accept-count: 800
-    max-connections: 10000
-  timeout: 10000
+    max-threads: 100
+    accept-count: 500
+    max-connections: 1024
+  timeout: 30000
   session:
-    timeout: 1800
+    timeout: 30000
+    
+    
+wx:
+ miniapp:
+   configs:
+       - appid: #微信小程序的appid
+         secret: #微信小程序的Secret
+         token: #微信小程序消息服务器配置的token
+         aesKey: #微信小程序消息服务器配置的EncodingAESKey
+         msgDataFormat: JSON
