@@ -41,10 +41,10 @@ public class Response {
     return response;
   }
   
-  public static Response excute(String message, boolean  status) {
+  public static Response exception(int exceptionCode,String message) {
     Response response = new Response();
-    response.setStatus(status?0:-1);
-    response.setMessage(message.concat(status?"成功":"失败"));
+    response.setStatus(exceptionCode);
+    response.setMessage(message);
     return response;
   }
   

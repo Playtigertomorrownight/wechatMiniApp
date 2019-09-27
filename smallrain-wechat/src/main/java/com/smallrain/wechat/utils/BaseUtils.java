@@ -69,8 +69,8 @@ public class BaseUtils extends BeanUtils {
     //大于32就截取32
     uuid = uuid.length()>32?uuid.substring(0,32):uuid;
     //加前缀
-    if(StringUtils.isBlank(prefix) || prefix.length() > 10) return uuid;
-    return String.format("%s_%s", prefix,uuid.substring(prefix.length()+1));
+    if(StringUtils.isBlank(prefix) || prefix.length() > 31) return uuid;
+    return String.format("%s_%s", prefix,uuid);
   }
 
   /**

@@ -25,9 +25,9 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
  */
 public class MybatisCodeGenerator {
   
-  private static final String MODEL_NAME = "User";
+  private static final String MODEL_NAME = "Role";
   
-  private static final String TABLES_NAME = "user";   // ，分割
+  private static final String TABLES_NAME = "role";   // ，分割
 
   public static void main(String[] args) {
 
@@ -65,7 +65,7 @@ public class MybatisCodeGenerator {
     // 包配置
     PackageConfig packageConfig = new PackageConfig();
     packageConfig.setModuleName(MODEL_NAME.toLowerCase());
-    packageConfig.setParent("com.smallrain.template.models");
+    packageConfig.setParent("com.smallrain.wechat.models");
     autoGenerator.setPackageInfo(packageConfig);
 
     // 自定义配置
@@ -98,8 +98,9 @@ public class MybatisCodeGenerator {
     // 配置自定义输出模板
     //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
 //    templateConfig.setEntity("templates/entity2.java");
-//    templateConfig.setService();
-//    templateConfig.setController();
+     templateConfig.setService("/templates/source/service.java");
+                                 //  /templates/source/controller.java.ftl
+     templateConfig.setController("/templates/source/controller.java");
 
     templateConfig.setXml(null);
     autoGenerator.setTemplate(templateConfig);
@@ -116,7 +117,8 @@ public class MybatisCodeGenerator {
     strategy.setRestControllerStyle(true);
     strategy.setControllerMappingHyphenStyle(true);
     // 公共父类
-    //strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
+    //strategy.setSuperControllerClass("com.smallrain.wechat.common.base.BaseController.java");
+    //strategy.setSuperServiceClass("com.smallrain.wechat.common.base.BaseService.java");
     // 写于父类中的公共字段
     //strategy.setSuperEntityColumns("id");
     strategy.setInclude(TABLES_NAME.split(","));
