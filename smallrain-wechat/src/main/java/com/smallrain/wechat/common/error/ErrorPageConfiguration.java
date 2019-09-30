@@ -1,4 +1,4 @@
-package com.smallrain.wechat.error;
+package com.smallrain.wechat.common.error;
 
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.ErrorPageRegistrar;

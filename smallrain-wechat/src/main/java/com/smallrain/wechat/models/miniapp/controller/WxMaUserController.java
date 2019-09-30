@@ -23,7 +23,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  */
 @Slf4j
 @RestController
-@RequestMapping("/wx/user/{appid}")
+@RequestMapping("/api/v1/wx/user/{appid}")
 public class WxMaUserController {
 
   /**

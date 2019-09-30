@@ -18,6 +18,8 @@ import org.springframework.beans.FatalBeanException;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class BaseUtils extends BeanUtils {
 
   /**
@@ -55,6 +57,38 @@ public class BaseUtils extends BeanUtils {
         }
       }
     }
+  }
+  
+  /**
+   * 检查独享是否包含必须属性
+   * @param source
+   * @param neededProperties
+   * @return
+   */
+  public static String checkBeanNeededField(Object source, @Nullable JSONObject neededProperties) {
+    if(null==neededProperties||neededProperties.isEmpty()) return null;
+    Class<?> actualEditable = source.getClass();
+    PropertyDescriptor[] targetPds = getPropertyDescriptors(actualEditable);
+    StringBuilder result = new StringBuilder();
+    for (PropertyDescriptor targetPd : targetPds) {
+      Method readMethod = targetPd.getReadMethod();
+      if (readMethod != null && neededProperties.containsKey((targetPd.getName()))) {
+        try {
+          Object value = readMethod.invoke(source);
+          if(null==value) {
+            result.append(neededProperties.get(targetPd.getName())).append("、");
+          }
+        } catch (Throwable ex) {
+          throw new FatalBeanException("Could not read property '" + targetPd.getName() + "' from source to target",
+              ex);
+        }
+      }
+    }
+    if(result.length()>0) {
+      result.insert(0, "缺少必传字段：");
+      return result.substring(0,result.length()-1);
+    }
+    return null;
   }
 
   /**

@@ -13,6 +13,7 @@ import com.smallrain.wechat.common.exception.SmallrainException;
 import com.smallrain.wechat.models.user.entity.User;
 import com.smallrain.wechat.models.user.mapper.UserMapper;
 import com.smallrain.wechat.models.user.service.UserService;
+import com.smallrain.wechat.utils.AuthUtil;
 import com.smallrain.wechat.utils.BaseUtils;
 import com.smallrain.wechat.utils.EntityCheckUtil;
 
@@ -50,9 +51,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if(StringUtils.isNotBlank(entity.getId())) {
       update(entity);
     }
+    //密码加密
+    AuthUtil.encryptPassword(entity, true);
     entity.setId(BaseUtils.createUuid("user"));
     entity.setRegisterTime(LocalDateTime.now());
-    entity.setDeleteFlag(0);
+    entity.setStatus(0);
     this.save(entity);
     return entity;
   }

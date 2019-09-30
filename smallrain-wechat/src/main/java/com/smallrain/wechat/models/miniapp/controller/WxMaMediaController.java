@@ -36,7 +36,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  */
 @Slf4j
 @RestController
-@RequestMapping("/wx/media/{appid}")
+@RequestMapping("/api/v1/wx/media/{appid}")
 public class WxMaMediaController {
 
   /**

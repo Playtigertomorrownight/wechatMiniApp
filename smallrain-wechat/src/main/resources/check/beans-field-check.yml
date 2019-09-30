@@ -1,0 +1,16 @@
+USER:
+  account: 用户账号
+  password: 用户密码
+  registerTime: 用户注册时间
+  status: 用户状态
+  salt: 密码加密的盐
+
+ROLE:
+  name: 角色名称
+  deleteFlag: 角色状态
+
+MENU:
+  text: 菜单文本
+  type: 菜单类型
+  sort: 菜单排序值
+  status: 菜单状态

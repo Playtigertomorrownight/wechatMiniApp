@@ -7,7 +7,9 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -20,9 +22,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Base64Utils;
 
-import lombok.extern.slf4j.Slf4j;
+import com.smallrain.wechat.utils.AuthUtil;
 
-import org.apache.shiro.mgt.SecurityManager; 
+import lombok.extern.slf4j.Slf4j; 
 
 @Slf4j
 @Configuration
@@ -30,6 +32,8 @@ public class ShiroConfig {
 
   @Autowired
   private ShiroProperties shiroProperties;
+  @Autowired
+  private SmallrainRealm smallrainRealm;
   
   @Bean
   public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
@@ -58,15 +62,28 @@ public class ShiroConfig {
   }
 
   @Bean
-  public SecurityManager securityManager(SmallrainRealm smallrainRealm) {
+  public SecurityManager securityManager() {
       DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
       // 配置 SecurityManager，并注入 shiroRealm
-      securityManager.setRealm(smallrainRealm);
+      securityManager.setRealm(smallrainRealm());
       // 配置 shiro session管理器
       securityManager.setSessionManager(sessionManager());
       // 配置 rememberMeCookie
       securityManager.setRememberMeManager(rememberMeManager());
       return securityManager;
+  }
+  
+  public SmallrainRealm smallrainRealm() {
+      smallrainRealm.setCredentialsMatcher(hashedCredentialsMatcher()); // 原来在这里
+      return smallrainRealm;
+  }
+  
+  @Bean
+  public HashedCredentialsMatcher hashedCredentialsMatcher() {
+      HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+      hashedCredentialsMatcher.setHashAlgorithmName(AuthUtil.ALGORITHM_NAME); // 散列算法
+      hashedCredentialsMatcher.setHashIterations(AuthUtil.HASH_ITERATIONS); // 散列次数
+      return hashedCredentialsMatcher;
   }
 
   /**

@@ -1,4 +1,4 @@
-package com.smallrain.wechat.common;
+package com.smallrain.wechat.common.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

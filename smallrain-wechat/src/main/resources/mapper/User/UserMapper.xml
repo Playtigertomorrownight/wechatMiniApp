@@ -8,6 +8,7 @@
         <result column="name" property="name" />
         <result column="account" property="account" />
         <result column="password" property="password" />
+        <result column="salt" property="salt" />
         <result column="sex" property="sex" />
         <result column="phone" property="phone" />
         <result column="email" property="email" />
@@ -18,12 +19,12 @@
         <result column="band_ip" property="bandIp" />
         <result column="real_name" property="realName" />
         <result column="signature" property="signature" />
-        <result column="delete_flag" property="deleteFlag" />
+        <result column="status" property="status" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, account, password, sex, phone, email, identity, head_image, role, register_time, band_ip, real_name, signature, delete_flag
+        id, name, account, password, salt, sex, phone, email, identity, head_image, role, register_time, band_ip, real_name, signature, status
     </sql>
 
 </mapper>

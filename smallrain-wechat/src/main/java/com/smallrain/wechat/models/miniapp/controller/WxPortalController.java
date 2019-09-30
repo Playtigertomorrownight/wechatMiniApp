@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@RequestMapping("/wx/portal/{appid}")
+@RequestMapping("/api/v1/wx/portal/{appid}")
 public class WxPortalController {
 
   @GetMapping(produces = "text/plain;charset=utf-8")

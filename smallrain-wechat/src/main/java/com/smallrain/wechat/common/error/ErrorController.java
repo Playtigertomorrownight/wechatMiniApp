@@ -1,4 +1,4 @@
-package com.smallrain.wechat.error;
+package com.smallrain.wechat.common.error;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

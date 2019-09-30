@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author wangying
- * @since 2019-09-26
+ * @since 2019-09-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -36,6 +36,8 @@ public class User extends Model<User> {
 
     @ApiModelProperty(value = "用户密码")
     private String password;
+
+    private String salt;
 
     @ApiModelProperty(value = "用户性别： 0- 男，1- 女")
     private Integer sex;
@@ -68,12 +70,18 @@ public class User extends Model<User> {
     private String signature;
 
     @ApiModelProperty(value = "删除标记")
-    private Integer deleteFlag;
+    private Integer status;
 
 
     @Override
     protected Serializable pkVal() {
         return this.id;
+    }
+
+
+    public String getCredentialsSalt() {
+      // TODO Auto-generated method stub
+      return account+salt;
     }
 
 }

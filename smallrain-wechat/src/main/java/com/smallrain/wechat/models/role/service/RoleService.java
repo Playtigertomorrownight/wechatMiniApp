@@ -14,6 +14,8 @@ public interface RoleService {
   
   public List<Role> getList() throws SmallrainException;
   
+  public  List<Role> getListByUserId(String userId);
+  
   public Role getOne(String id) throws SmallrainException;
   
   public Role add(Role entity) throws SmallrainException;
@@ -21,4 +23,5 @@ public interface RoleService {
   public Role update(Role entity) throws SmallrainException;
   
   public boolean delete(String... id) throws SmallrainException;
+  
 }

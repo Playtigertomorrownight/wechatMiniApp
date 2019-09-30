@@ -14,7 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.smallrain.wechat.common.Response;
+import com.smallrain.wechat.common.model.Response;
 import com.smallrain.wechat.utils.ExceptionCodeUtil;
 
 @ControllerAdvice

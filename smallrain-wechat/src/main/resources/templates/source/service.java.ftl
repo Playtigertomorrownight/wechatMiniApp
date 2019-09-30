@@ -20,5 +20,5 @@ public interface ${table.serviceName} {
   
   public ${entity} update(${entity} entity) throws SmallrainException;
   
-  public boolean delete(boolean isLogic, String... ids) throws SmallrainException;
+  public boolean delete(String... ids) throws SmallrainException;
 }

@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@RequestMapping("/v1/${table.entityPath}")
+@RequestMapping("/api/v1/${table.entityPath}")
 public class ${table.controllerName} {
 
     @Autowired

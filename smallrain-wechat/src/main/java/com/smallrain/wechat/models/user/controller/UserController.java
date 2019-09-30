@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.smallrain.wechat.common.Response;
 import com.smallrain.wechat.common.exception.SmallrainException;
-import com.smallrain.wechat.models.user.entity.User;
+import com.smallrain.wechat.common.model.Response;
 import com.smallrain.wechat.models.user.service.UserService;
-
+import com.smallrain.wechat.models.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  *
  * @author wangying
- * @since 2019-09-26
+ * @since 2019-09-29
  */
 @Slf4j
 @RestController
-@RequestMapping("/v1/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     @Autowired
@@ -37,25 +36,25 @@ public class UserController {
     }
     
     @PostMapping("")
-    public Response add(@RequestBody User entity) throws SmallrainException {
+    public Response add(@RequestBody User entity) throws SmallrainException  {
       log.info("添加一条 User 记录");
       return Response.success(userService.add(entity));
     }
     
     @PutMapping("")
-    public Response put(@RequestBody User entity) throws SmallrainException {
+    public Response put(@RequestBody User entity) throws SmallrainException  {
       log.info("更新一条 User 记录");
       return Response.success(userService.update(entity));
     }
     
     @GetMapping("/{id}")
-    public Response get(@PathVariable String id) throws SmallrainException {
+    public Response get(@PathVariable String id) throws SmallrainException  {
       log.info("根据 ID：{} 获取一条 User 记录",id);
       return Response.success(userService.getOne(id));
     }
     
     @DeleteMapping("/{id}")
-    public Response delete(@PathVariable String id) throws SmallrainException {
+    public Response delete(@PathVariable String id) throws SmallrainException  {
       log.info("根据 ID：{} 删除一条 User 记录",id);
       return Response.success(userService.delete(id));
     }
