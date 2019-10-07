@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.smallrain.wechat.common.Constants;
+
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
@@ -25,10 +29,12 @@ public class SwaggerConfig {
   @Bean
   public Docket createRestApi() {
     List<Parameter> pars = new ArrayList<>();
-//    ParameterBuilder ticketPar = new ParameterBuilder();
-//    ticketPar.name("authToken").description("接口秘钥，不知道别用").modelRef(new ModelRef("string")).parameterType("header")
-//        .required(true).build(); // header中的ticket参数非必填，传空也可以
-//    pars.add(ticketPar.build()); // 根据每个方法名也知道当前方法在设置什么参数
+    ParameterBuilder builder = new ParameterBuilder();
+	builder.parameterType("header").name(Constants.LOGIN_AUTH_TOKEN_KEY)
+			.description("restful 方式的 header 参数")
+			.required(false)
+			.modelRef(new ModelRef("string")); // 在swagger里显示header
+    pars.add(builder.build()); // 根据每个方法名也知道当前方法在设置什么参数
     boolean swaggerEnable = Boolean.valueOf(System.getenv("DEV_MODE"));
     return new Docket(DocumentationType.SWAGGER_2)
         .enable(swaggerEnable)

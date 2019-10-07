@@ -22,6 +22,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Base64Utils;
 
+import com.smallrain.wechat.common.filter.LogoutFilter;
+import com.smallrain.wechat.common.filter.RestfulFilter;
 import com.smallrain.wechat.utils.AuthUtil;
 
 import lombok.extern.slf4j.Slf4j; 
@@ -38,25 +40,28 @@ public class ShiroConfig {
   @Bean
   public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
       ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-      // 设置 securityManager
-      shiroFilterFactoryBean.setSecurityManager(securityManager);
-      // 登录的 url
-      shiroFilterFactoryBean.setLoginUrl(shiroProperties.getLoginUrl());
-      // 登录成功后跳转的 url
-      shiroFilterFactoryBean.setSuccessUrl(shiroProperties.getSuccessUrl());
-      // 未授权 url
-      shiroFilterFactoryBean.setUnauthorizedUrl(shiroProperties.getUnauthorizedUrl());
-      LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+      shiroFilterFactoryBean.setSecurityManager(securityManager);  // 设置 securityManager
+      shiroFilterFactoryBean.setLoginUrl(shiroProperties.getLoginUrl()); // 登录的 url
+      shiroFilterFactoryBean.setSuccessUrl(shiroProperties.getSuccessUrl());  // 登录成功后跳转的 url
+      shiroFilterFactoryBean.setUnauthorizedUrl(shiroProperties.getUnauthorizedUrl());  // 未授权 url
+      LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();  
       // 设置免认证 url
       String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(shiroProperties.getAnonUrl(), ",");
       for (String url : anonUrls) {
           filterChainDefinitionMap.put(url, "anon");
       }
       // 配置退出过滤器，其中具体的退出代码 Shiro已经替我们实现了
-      filterChainDefinitionMap.put(shiroProperties.getLogoutUrl(), "logout");
+//      filterChainDefinitionMap.put(shiroProperties.getLogoutUrl(), "logout");
       // 除上以外所有 url都必须认证通过才可以访问，未通过认证自动访问 LoginUrl
       filterChainDefinitionMap.put("/**", "authc");
       shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+      //配置自定义退出过滤器 
+      LogoutFilter logoutFilter = new LogoutFilter();
+	  logoutFilter.setRedirectUrl("/login.html");
+	  shiroFilterFactoryBean.getFilters().put("logout", logoutFilter);
+	  //配置restFul 接口过滤器
+	  RestfulFilter restfulFilter = new RestfulFilter();
+	  shiroFilterFactoryBean.getFilters().put("authc", restfulFilter);
       log.info("Shiro拦截器工厂类注入成功");
       return shiroFilterFactoryBean;
   }

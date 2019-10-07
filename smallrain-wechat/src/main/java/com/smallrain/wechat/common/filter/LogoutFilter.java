@@ -27,10 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
 
+	private static String SUCCESS_INFO = JSONObject.toJSONString(Response.success("退出成功"));
+	private static String ERR_INFO = JSONObject.toJSONString(Response.fail(HttpStatus.BAD_REQUEST.value(), "退出失败,token不存在"));
 
-  private static String SUCCESS_INFO = JSONObject.toJSONString(Response.success("退出成功"));
-  private static String ERR_INFO = JSONObject.toJSONString(Response.fail(HttpStatus.BAD_REQUEST.value(), "退出失败,token不存在"));
-  
 	@Override
 	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
 		String loginToken = RestfulFilter.getToken(request);
@@ -38,7 +37,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 		if (StringUtils.isBlank(loginToken)) {// 非Restful方式
 			boolean flag = super.preHandle(request, response);
 			log.debug("{}退出成功", user.getAccount());
-			//SpringUtil.getBean(SysLogService.class).save(user.getId(), "退出", true, null);
+			// SpringUtil.getBean(SysLogService.class).save(user.getId(), "退出", true, null);
 			return flag;
 		} else {
 			TokenManager tokenManager = SpringUtil.getBean(TokenManager.class);
@@ -49,7 +48,8 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 			} else {
 				RestfulFilter.writeResponse(WebUtils.toHttp(response), HttpStatus.BAD_REQUEST.value(), ERR_INFO);
 			}
-			//SpringUtil.getBean(SysLogService.class).save(user.getId(), "token方式退出", flag, null);
+			// SpringUtil.getBean(SysLogService.class).save(user.getId(), "token方式退出", flag,
+			// null);
 			return false;
 		}
 	}

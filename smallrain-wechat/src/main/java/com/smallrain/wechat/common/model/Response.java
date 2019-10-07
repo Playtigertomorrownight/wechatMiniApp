@@ -2,6 +2,7 @@ package com.smallrain.wechat.common.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,12 +13,18 @@ import lombok.Data;
  */
 @Data
 @Builder
+@AllArgsConstructor
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class Response {
+	
   int status;
   String message;
   Object data;
 
+  public Response() {
+	  
+  }
+  
   public static Response success(Object obj) {
     Response response = new Response();
     response.setStatus(0);
@@ -47,5 +54,5 @@ public class Response {
     response.setMessage(message);
     return response;
   }
-  
+
 }
