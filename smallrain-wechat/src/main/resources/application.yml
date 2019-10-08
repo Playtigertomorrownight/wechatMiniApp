@@ -1,6 +1,22 @@
 spring: 
   application:
     name: smallrain-wechat
+  freemarker:
+    # 设置模板后缀名
+    suffix: .html
+    # 设置文档类型
+    content-type: text/html
+    # 设置页面编码格式
+    charset: UTF-8
+    # 设置页面缓存
+    cache: false
+    template-encoding: UTF-8
+    # 设置ftl文件路径
+    template-loader-path:
+      - classpath:/templates
+  # 设置静态文件路径，js,css等
+  mvc:
+    static-path-pattern: /static/**
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://106.12.204.7:3306/template?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&useSSL=false

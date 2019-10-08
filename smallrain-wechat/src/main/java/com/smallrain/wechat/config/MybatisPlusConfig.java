@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 
 @Configuration
-@MapperScan("com.smallrain.template.mapper")
+@MapperScan("com.smallrain.wechat.mapper")
 public class MybatisPlusConfig {
 
   /**
