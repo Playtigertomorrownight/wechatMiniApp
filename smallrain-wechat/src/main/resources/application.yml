@@ -24,7 +24,8 @@ spring:
     password: 123456
     
 server: 
-  port: 8088
+  domain: http://localhost
+  port: 80
   tomcat:
     uri-encoding: UTF-8
     max-threads: 100
