@@ -2,12 +2,41 @@
 <html>
 <head>
   <#include "common/header.html"/>
+  <style type="text/css">
+    .el-dialog__header {
+      padding: 30px 10px 30px;
+      background-color: #1c2438;
+      color: #f6f6f3;
+      letter-spacing: 5px;
+    }
+    .el-dialog__header label{
+      color: #f6f6f3;
+      letter-spacing: 2px;
+    }
+    .el-form--label-top .el-form-item__label {
+      font-size: 15px;
+      font-weight: 700;
+    }
+  </style>
+  
 </head>
 <body>
   <div id="app">
-    <el-button @click="visible = true">Button</el-button>
-    <el-dialog :visible.sync="visible" title="Hello world">
-      <p>Try Element</p>
+    <el-dialog :visible="true" :center="true" :width="dialogWidth" :show-close="false" :top="top">
+        <div slot="title" class="dialog-title" >
+            <h2> Hello, 你好 <br> <br>  欢迎登录到   <label> ${title} </label> </h2>  
+        </div>
+	    <el-form :model="form" status-icon :rules="rules" ref="loginForm" :label-position="labelPosition" :hide-required-asterisk="false">
+		    <el-form-item label="用户名：" required>
+		      <el-input v-model="form.account" autocomplete="off" :required="true"></el-input>
+		    </el-form-item>
+		    <el-form-item label="密码：" required>
+		      <el-input v-model="form.password" autocomplete="off" :required="true"></el-input>
+		    </el-form-item>
+	    </el-form>
+	    <div slot="footer" class="dialog-footer">
+	      <el-button style="width:100%;" type="primary">登录</el-button>
+	    </div>
     </el-dialog>
   </div>
 </body>
@@ -15,7 +44,16 @@
     new Vue({
       el: '#app',
       data: function() {
-        return { visible: false }
+        return { 
+        	top: "100px",
+        	visible: false,
+        	labelPosition: "top",
+        	dialogWidth: "410px",
+        	form: {
+        		account: "",
+        		password: ""
+        	}
+         }
       }
     })
   </script>
