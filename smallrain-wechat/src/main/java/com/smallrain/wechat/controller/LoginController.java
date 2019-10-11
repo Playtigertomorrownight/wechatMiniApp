@@ -43,8 +43,9 @@ public class LoginController {
 	@ApiOperation(value = "web端登陆")
 	@ResponseBody
 	@PostMapping("/web")
-	public void login(String username, String password) {
+	public void login(String username, String password, boolean rememberMe) {
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
+		usernamePasswordToken.setRememberMe(rememberMe);
 		SecurityUtils.getSubject().login(usernamePasswordToken);
 		// 设置shiro的session过期时间
 		SecurityUtils.getSubject().getSession().setTimeout(serverProperties.getServlet().getSession().getTimeout().toMillis());

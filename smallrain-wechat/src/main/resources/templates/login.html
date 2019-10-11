@@ -16,6 +16,10 @@
     .el-form--label-top .el-form-item__label {
       font-size: 15px;
       font-weight: 700;
+      padding: 0px 0px 2px 0px;
+    }
+    .el-form-item {
+      margin-bottom: 5px;
     }
   </style>
   
@@ -27,15 +31,18 @@
             <h2> Hello, 你好 <br> <br>  欢迎登录到   <label> ${title} </label> </h2>  
         </div>
 	    <el-form :model="form" status-icon :rules="rules" ref="loginForm" :label-position="labelPosition" :hide-required-asterisk="false">
-		    <el-form-item label="用户名：" required>
-		      <el-input v-model="form.account" autocomplete="off" :required="true"></el-input>
+		    <el-form-item label="用户名：" required prop="account">
+		      <el-input placeholder="请输入用户名"  v-model="form.account" @change="buttonEnable"></el-input>
 		    </el-form-item>
-		    <el-form-item label="密码：" required>
-		      <el-input v-model="form.password" autocomplete="off" :required="true"></el-input>
+		    <el-form-item label="密码：" required prop="password">
+		      <el-input placeholder="请输入密码"  v-model="form.password" type="password" @change="buttonEnable"></el-input>
 		    </el-form-item>
+		    <div style="text-align: right;margin: 30px 1px 6px 0px;">
+		      <el-checkbox v-model="form.rememberMe" label="2">记住登录状态</el-checkbox>
+		    </div>
 	    </el-form>
 	    <div slot="footer" class="dialog-footer">
-	      <el-button style="width:100%;" type="primary">登录</el-button>
+	      <el-button style="width:100%;" type="primary" :disabled="buttonStatus" :loading="buttonLoading"  @click="submitForm('loginForm')">{{buttonText}}</el-button>
 	    </div>
     </el-dialog>
   </div>
@@ -44,17 +51,75 @@
     new Vue({
       el: '#app',
       data: function() {
+    	//用户名正则，4到16位（字母，数字，下划线，减号）
+    	let accountPattern = /^[a-zA-Z0-9_-]{4,16}$/;
+    	//密码强度正则，最少4位，包括至少1 个字母，1个数字，1个特殊字符
+    	let passwordPattern = /^.*(?=.{4,18})(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%^&*?.]).*$/;
+    	let validateAccount = (rule, value, callback) => {
+    	  if (value === '') {
+    	    return callback(new Error('账号不能为空！'));
+    	  }
+    	  if(!accountPattern.test(value)){
+    		return callback(new Error('账号格式不正确！4 到 16 位（字母，数字，_，-）'));
+    	  }
+    	  callback();
+        };
+        let validatePassword = (rule, value, callback) => {
+            if (value === '') {
+              return callback(new Error('密码不能为空！'));
+            }
+            if(!passwordPattern.test(value)){
+                return callback(new Error('密码格式不正确！4 到 18 位，包括至少1 个字母，1个数字，1个特殊字符'));
+            }
+            callback();
+          };
         return { 
         	top: "100px",
         	visible: false,
         	labelPosition: "top",
         	dialogWidth: "410px",
+        	buttonLoading: false,
+        	buttonText: "登录",
+        	buttonStatus: false,
         	form: {
         		account: "",
-        		password: ""
-        	}
+        		password: "",
+        		rememberMe: true
+        	},
+        	rules: {
+        		account: [
+                  { validator: validateAccount, trigger: 'blur' }
+                ],
+                password: [
+                  { validator: validatePassword, trigger: 'blur' }
+                ]
+              }
          }
-      }
+      },
+      methods: {
+    	  buttonEnable() {
+    		if("登录"!=this.buttonText){
+    		  this.buttonText="登录";
+              this.buttonStatus = false;
+    		}
+    	  },
+          submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+              console.log(valid)
+              if (valid) {   //表单验证成功，在此提交请求
+            	  this.buttonLoading = true;
+            	  this.buttonText="登录中，请稍后..";
+            	  this.buttonStatus = true;
+            	  setTimeout(() => {
+            		  this.buttonLoading = false;
+                      this.buttonText="登录失败，请重试";
+            	  },3000);
+              } else {
+                return false;
+              }
+            });
+          }
+        }
     })
   </script>
 </html>
