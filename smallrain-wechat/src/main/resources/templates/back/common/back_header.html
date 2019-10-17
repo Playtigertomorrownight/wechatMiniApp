@@ -4,11 +4,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="${domain}/image/logo.png" type="image/x-icon"/>
     <!-- import CSS -->
-      <link rel="stylesheet" href="${domain}/layui/css/layui.css">
+    <link rel="stylesheet" href="${domain}/css/element.css">
+    <link rel="stylesheet" href="${domain}/css/swiper.css">
+    <link rel="stylesheet" href="${domain}/css/back/theme.css">
+    <!-- import Vue before Element -->
+    <script src="${domain}/javascript/vue.js"></script>
     <!-- import JavaScript -->
-    <script src="${domain}/layui/layui.js"></script>
-     <script src="${domain}/javascript/jquery.js"></script>
+    <script src="${domain}/javascript/element.js"></script>
     <script src="${domain}/javascript/axio.js"></script>
+    <script src="${domain}/javascript/swiper.js"></script>
+    <script src="${domain}/javascript/laydate.js"></script>
+    <script src="${domain}/javascript/layer.js"></script>
     
     <script type="text/javascript">
 
@@ -33,7 +39,7 @@
            }).then(function (response) {
                //http 状态不对
                if(!response || 200 != response.status){
-                   content.$message.error('请求失败! ' + response?(response.statusText?response.statusText:'请求异常'):'请求异常');
+            	   content.$message.error('请求失败! ' + response?(response.statusText?response.statusText:'请求异常'):'请求异常');
                    callback('HTTP_ERROR');
                    return ;
                }
@@ -43,4 +49,42 @@
               content.$message.error('请求异常: '+error);
           });
        }
+
+	   // 全屏 
+	   function fullScreen(){
+	       if(document.documentElement.RequestFullScreen){
+	           document.documentElement.RequestFullScreen();
+	       }
+	       //兼容火狐
+	       if(document.documentElement.mozRequestFullScreen){
+	           document.documentElement.mozRequestFullScreen();
+	       }
+	       //兼容谷歌等可以webkitRequestFullScreen也可以webkitRequestFullscreen
+	       if(document.documentElement.webkitRequestFullScreen){
+	           document.documentElement.webkitRequestFullScreen();
+	       }
+	       //兼容IE,只能写msRequestFullscreen
+	       if(document.documentElement.msRequestFullscreen){
+	           document.documentElement.msRequestFullscreen();
+	       }
+	   }
+	   // 退出全屏
+	   function fullScreenNormal() {
+	       if(document.exitFullScreen){
+	           document.exitFullscreen()
+	       }
+	       //          //兼容火狐
+	       //          console.log(document.mozExitFullScreen)
+	       if(document.mozCancelFullScreen){
+	           document.mozCancelFullScreen()
+	       }
+	       //          //兼容谷歌等
+	       if(document.webkitExitFullscreen){
+	           document.webkitExitFullscreen()
+	       }
+	       //          //兼容IE
+	       if(document.msExitFullscreen){
+	           document.msExitFullscreen()
+	       }
+	   }
     </script>

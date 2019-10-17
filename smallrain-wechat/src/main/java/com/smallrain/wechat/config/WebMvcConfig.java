@@ -32,7 +32,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
       registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
       registry.addResourceHandler("/image/**").addResourceLocations("classpath:/static/image/");
       registry.addResourceHandler("/javascript/**").addResourceLocations("classpath:/static/javascript/");
-      registry.addResourceHandler("/layui/**").addResourceLocations("classpath:/static/layui/");
+      registry.addResourceHandler("/layer/**").addResourceLocations("classpath:/static/layer/");
+      registry.addResourceHandler("/laydate/**").addResourceLocations("classpath:/static/laydate/");
       //swagger文档
       registry.addResourceHandler("swagger-ui.html")
       .addResourceLocations("classpath:/META-INF/resources/");
