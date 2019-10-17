@@ -47,15 +47,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   public User add(User entity) throws SmallrainException  {
     // TODO Auto-generated method stub
     log.info("添加用户：{}",entity);
-    EntityCheckUtil.userFieldCheck(entity);
     if(StringUtils.isNotBlank(entity.getId())) {
       update(entity);
     }
-    //密码加密
-    AuthUtil.encryptPassword(entity, true);
     entity.setId(BaseUtils.createUuid("user"));
     entity.setRegisterTime(LocalDateTime.now());
     entity.setStatus(0);
+    EntityCheckUtil.userFieldCheck(entity);
+    //密码加密
+    AuthUtil.encryptPassword(entity, true);
     this.save(entity);
     return entity;
   }
@@ -63,7 +63,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   @Override
   public User update(User entity) throws SmallrainException  {
     log.info("更新用户：{}",entity);
-    EntityCheckUtil.userFieldCheck(entity);
     if(StringUtils.isBlank(entity.getId())||!entity.getId().startsWith("user")) {
       entity.setId(null);
       add(entity);
@@ -74,6 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       add(entity);
     }
     BaseUtils.copyNotNullProperties(entity, oldUser, "id", "registerTime", "bandIp");
+    EntityCheckUtil.userFieldCheck(entity);
     log.info("更新用户。。");
     this.updateById(entity);
     return entity;

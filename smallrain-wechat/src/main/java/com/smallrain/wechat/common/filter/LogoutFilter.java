@@ -34,9 +34,13 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
 		String loginToken = RestfulFilter.getToken(request);
 		User user = ShiroUtil.getCurrentUser();
+		if(null==user) {
+		  log.info("用户为空，退出成功");
+		  return super.preHandle(request, response);
+		}
 		if (StringUtils.isBlank(loginToken)) {// 非Restful方式
 			boolean flag = super.preHandle(request, response);
-			log.debug("{}退出成功", user.getAccount());
+			log.info("{}退出成功", user.getAccount());
 			// SpringUtil.getBean(SysLogService.class).save(user.getId(), "退出", true, null);
 			return flag;
 		} else {

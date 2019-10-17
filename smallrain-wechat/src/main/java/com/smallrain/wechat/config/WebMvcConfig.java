@@ -28,9 +28,16 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     //静态资源访问目录配置
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+      //静态资源文件
       registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
       registry.addResourceHandler("/image/**").addResourceLocations("classpath:/static/image/");
       registry.addResourceHandler("/javascript/**").addResourceLocations("classpath:/static/javascript/");
+      registry.addResourceHandler("/layui/**").addResourceLocations("classpath:/static/layui/");
+      //swagger文档
+      registry.addResourceHandler("swagger-ui.html")
+      .addResourceLocations("classpath:/META-INF/resources/");
+      registry.addResourceHandler("/webjars/**")
+      .addResourceLocations("classpath:/META-INF/resources/webjars/");
       
       super.addResourceHandlers(registry);
     }
@@ -41,7 +48,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //这里可以添加多个拦截器
         registry.addInterceptor(addAttributeInterceptor)
         .addPathPatterns("/**")
-        .excludePathPatterns("/swagger*/**","/webjars/**","/v2/**","/css/**","/image/**","/javascript/**","/api/**");
+        .excludePathPatterns("/layui/**","/login/web","/login/rest","/error/**","/swagger*/**","/webjars/**","/v2/**","/css/**","/image/**","/javascript/**","/api/**");
         super.addInterceptors(registry);
     }
 }

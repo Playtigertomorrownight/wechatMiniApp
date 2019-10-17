@@ -75,7 +75,7 @@ public class BaseUtils extends BeanUtils {
       if (readMethod != null && neededProperties.containsKey((targetPd.getName()))) {
         try {
           Object value = readMethod.invoke(source);
-          if(null==value) {
+          if(null==value || StringUtils.isEmpty(value.toString())) {
             result.append(neededProperties.get(targetPd.getName())).append("、");
           }
         } catch (Throwable ex) {

@@ -70,11 +70,13 @@ public class SmallrainRealm extends AuthorizingRealm {
       throw new AccountException("根据用户名获取用户信息失败：" + e.getMessage());
     }
     if (null == user) {
-      throw new AccountException("用户名不正确");
+      throw new AccountException("用户名不存在！");
     }
-    String password = AuthUtil.encryptPassword(new String((char[]) token.getCredentials()), user.getSalt());
+    String password = new String((char[]) token.getCredentials()); 
+    //内部加密
+    password = AuthUtil.encryptPassword(password, user.getCredentialsSalt());
     if (!password.equals(user.getPassword())) {
-      throw new AccountException("密码不正确");
+      throw new AccountException("您的密码不正确");
     }
     if (user.getStatus() != Constants.USER_STATUS_NORMAL) {
       throw new IncorrectCredentialsException("用户无效状态，请联系管理员");

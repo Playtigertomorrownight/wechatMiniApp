@@ -4,12 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="${domain}/image/logo.png" type="image/x-icon"/>
     <!-- import CSS -->
-    <link rel="stylesheet" href="${domain}/css/element.css">
-    <!-- import Vue before Element -->
-    <script src="${domain}/javascript/vue.js"></script>
+      <link rel="stylesheet" href="${domain}/layui/css/layui.css">
     <!-- import JavaScript -->
-    <script src="${domain}/javascript/element.js"></script>
-    
+    <script src="${domain}/layui/layui.js"></script>
+     <script src="${domain}/javascript/jquery.js"></script>
     <script src="${domain}/javascript/axio.js"></script>
     
     <script type="text/javascript">
@@ -35,7 +33,7 @@
            }).then(function (response) {
                //http 状态不对
                if(!response || 200 != response.status){
-            	   content.$message.error('请求失败! ' + response?(response.statusText?response.statusText:'请求异常'):'请求异常');
+                   content.$message.error('请求失败! ' + response?(response.statusText?response.statusText:'请求异常'):'请求异常');
                    callback('HTTP_ERROR');
                    return ;
                }

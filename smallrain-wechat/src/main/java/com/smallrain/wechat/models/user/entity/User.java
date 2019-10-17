@@ -81,7 +81,7 @@ public class User extends Model<User> {
 
     public String getCredentialsSalt() {
       // TODO Auto-generated method stub
-      return account+salt;
+      return "user-credentials-salt-"+salt;
     }
 
 }

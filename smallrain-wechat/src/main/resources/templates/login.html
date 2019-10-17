@@ -2,6 +2,7 @@
 <html>
 <head>
   <#include "common/header.html"/>
+  <title>统一登录页面</title>
   <style type="text/css">
     .el-dialog__header {
       padding: 30px 10px 30px;
@@ -30,12 +31,12 @@
         <div slot="title" class="dialog-title" >
             <h2> Hello, 你好 <br> <br>  欢迎登录到   <label> ${title} </label> </h2>  
         </div>
-	    <el-form :model="form" status-icon :rules="rules" ref="loginForm" :label-position="labelPosition" :hide-required-asterisk="false">
+	    <el-form :model="form" status-icon :rules="rules" ref="loginForm" :label-position="labelPosition" :hide-required-asterisk="false" @keyup.enter.native="submitForm('loginForm')">
 		    <el-form-item label="用户名：" required prop="account">
-		      <el-input placeholder="请输入用户名"  v-model="form.account" @change="buttonEnable"></el-input>
+		      <el-input placeholder="请输入用户名"  v-model="form.account"></el-input>
 		    </el-form-item>
 		    <el-form-item label="密码：" required prop="password">
-		      <el-input placeholder="请输入密码"  v-model="form.password" type="password" @change="buttonEnable"></el-input>
+		      <el-input placeholder="请输入密码"  v-model="form.password" type="password"></el-input>
 		    </el-form-item>
 		    <div style="text-align: right;margin: 30px 1px 6px 0px;">
 		      <el-checkbox v-model="form.rememberMe" label="2">记住登录状态</el-checkbox>
@@ -47,7 +48,8 @@
     </el-dialog>
   </div>
 </body>
-  <script>
+<script src="${domain}/javascript/md5.js"></script>
+<script>
     new Vue({
       el: '#app',
       data: function() {
@@ -84,7 +86,7 @@
         	form: {
         		account: "",
         		password: "",
-        		rememberMe: true
+        		rememberMe: false
         	},
         	rules: {
         		account: [
@@ -96,13 +98,19 @@
               }
          }
       },
-      methods: {
-    	  buttonEnable() {
-    		if("登录"!=this.buttonText){
-    		  this.buttonText="登录";
-              this.buttonStatus = false;
-    		}
+      watch: {
+    	  form: {
+    		handler (value) {
+    		  if("登录"!=this.buttonText){
+    	        console.log("change event");
+    	        this.buttonText="登录";
+    	        this.buttonStatus = false;
+    	      }
+    		},
+    		deep: true
     	  },
+      },
+      methods: {
           submitForm(formName) {
             this.$refs[formName].validate((valid) => {
               console.log(valid)
@@ -110,11 +118,35 @@
             	  this.buttonLoading = true;
             	  this.buttonText="登录中，请稍后..";
             	  this.buttonStatus = true;
-            	  setTimeout(() => {
-            		  this.buttonLoading = false;
-                      this.buttonText="登录失败，请重试";
-            	  },3000);
+            	  //开始登录
+            	  let loginData = {};
+            	  //对密码进行加密
+            	  loginData['account'] = this.form.account;
+            	  loginData['password'] = hex_md5(this.form.password);
+            	  loginData['rememberMe'] = this.form.rememberMe;
+            	  let that = this;
+            	  sendRequest(this,'${domain}/login/web','POST',loginData,function(res){
+            		  if('HTTP_ERROR'==res) {
+            			 that.buttonText="登录";
+                         that.buttonStatus = false;
+                         that.buttonLoading = false;
+            		  }
+            		  let resData = res.data;
+            		  if(0 != resData.status){
+            			  that.$message.error(resData.message);
+                          that.buttonText="登录";
+                          that.buttonStatus = false;
+                          that.buttonLoading = false;
+                          return ;
+            		  }
+            		  that.$message.info('登录成功，正在跳转..');
+            		  that.buttonText="登录成功，正在跳转..";
+                      that.buttonStatus = false;
+            		  window.location.href="${domain}/index";
+            	  });
               } else {
+            	this.buttonText="数据格式不正确，请修改后登陆";
+                this.buttonStatus = true;
                 return false;
               }
             });

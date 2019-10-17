@@ -31,7 +31,7 @@ public class ExceptionCodeUtil {
   public static String getExceptionMessage(Object key) {
     if (null == key)
       return "";
-    Object msg = EXCEPTION_CODES.get(key);
+    Object msg = EXCEPTION_CODES.getProperty(key.toString());
     return null == msg ? "" : msg.toString();
   }
   
@@ -46,7 +46,7 @@ public class ExceptionCodeUtil {
     if (null != extend && extend.length > 0) {
       StringBuilder ms = new StringBuilder(message);
       ms.append(": ");
-      for(int i=1;i<extend.length;i++) {
+      for(int i=0;i<extend.length;i++) {
         ms.append(extend[i]).append(",");
       }
       message=ms.substring(0,ms.length()-1);

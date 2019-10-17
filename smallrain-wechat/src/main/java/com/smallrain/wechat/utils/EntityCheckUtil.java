@@ -13,11 +13,14 @@ import com.smallrain.wechat.models.menu.entity.Menu;
 import com.smallrain.wechat.models.role.entity.Role;
 import com.smallrain.wechat.models.user.entity.User;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 实体类检查工具类
  * @author wangying.dz3
  *
  */
+@Slf4j
 public class EntityCheckUtil {
 
   // 初始化实体类检查配置内存
@@ -50,6 +53,7 @@ public class EntityCheckUtil {
     }
     String check = BaseUtils.checkBeanNeededField(user, checkConfig.getJSONObject("USER"));
     if(StringUtils.isNotBlank(check)) {
+      log.info("user check error:{}",check);
       throw new SmallrainException(600,check);
     }
 //    if(StringUtils.isBlank(user.getAccount())) {

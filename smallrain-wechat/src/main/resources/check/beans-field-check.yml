@@ -3,7 +3,6 @@ USER:
   password: 用户密码
   registerTime: 用户注册时间
   status: 用户状态
-  salt: 密码加密的盐
 
 ROLE:
   name: 角色名称
