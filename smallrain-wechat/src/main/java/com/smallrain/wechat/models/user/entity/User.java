@@ -52,7 +52,7 @@ public class User extends Model<User> {
     private String identity;
 
     @ApiModelProperty(value = "头像")
-    private String headImage;
+    private String headImage="";
 
     @ApiModelProperty(value = "用户角色ID")
     private String role;
