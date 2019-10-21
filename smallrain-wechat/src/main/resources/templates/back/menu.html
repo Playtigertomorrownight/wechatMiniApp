@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <#include "common/back_header.html" />
+  <title>菜单管理页面</title>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0.8%;
+      width: 97%;
+    }
+    #app {
+      padding: 10px;
+      padding-left: 20px;
+      background-color: white;
+    }
+    .el-tabs__item {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .menu-edit {
+      padding: 10px;
+    }
+    .menu-edit-header {
+      padding: 1px 1px 1px 58px;
+      margin-bottom: 2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <el-row>
+	  <el-col :span="9">
+		 <div class="grid-content bg-purple">
+		 <el-tabs v-model="activeName" @tab-click="handleClick">
+		    <el-tab-pane label="管理后台菜单" name="first">
+		           后台菜单树
+		    </el-tab-pane>
+		    <el-tab-pane label="网站前台菜单" name="second">
+		            网站前台菜单树 
+		    </el-tab-pane>
+		  </el-tabs>
+	     </div>
+      </el-col>
+	  <el-col :span="15">
+		 <div class="menu-edit">
+		     <div class="menu-edit-header">
+		        <h4 style="margin:0;">菜单编辑处</h4>
+		     </div>
+		     
+		     <el-form style="padding: 1px 4em 13px 1em;" :label-position="formLabelPosition" label-width="100px" size="mini" :model="formData">
+				  <el-form-item label="名称">
+				    <el-input v-model="formData.name"></el-input>
+				  </el-form-item>
+				  <el-form-item label="活动区域">
+				    <el-input v-model="formData.region"></el-input>
+				  </el-form-item>
+				  <el-form-item label="活动形式">
+				    <el-input v-model="formData.type"></el-input>
+				  </el-form-item>
+				</el-form>
+		 </div>
+	  </el-col>
+	</el-row>
+  </div>
+</body>
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+        	activeName: 'first',
+        	formLabelPosition: 'right',
+            formData: {
+              name: '',
+              region: '',
+              type: ''
+            }
+        }
+      },
+	  methods: {
+		  handleClick(tab, event) {
+		    console.log(tab, event);
+		  }
+	  },
+      created : function() { //创建时
+		console.log("菜单管理页面加载完毕");
+	  }
+    })
+  </script>
+</html>

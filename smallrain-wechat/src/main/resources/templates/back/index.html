@@ -157,7 +157,7 @@
        <div class="swiper-container">
          <div class="swiper-wrapper">
            <div class="swiper-slide">
-              <iframe src="/back/main" id="iframe-1" class="iframe"></iframe>
+              <iframe onload="onload_iframe('-1')" src="/back/main" id="iframe-1" class="iframe"></iframe>
             </div>
           </div>
         </div>
@@ -175,6 +175,9 @@
     </div>
   </div>
   <script src="${domain}/javascript/back/index.js"></script>
+  
+  <script src="${domain}/javascript/back/menu_init.js"></script>
+  
   <script type="text/javascript">
 		//================================= 示例：一些基本信息 ================================= 
 		//设置模板标题 
@@ -197,9 +200,10 @@
 		//sp.showPage({id: 12345, name: '新页面', url: 'http://web.yanzhi21.com'});       // id尽量不要和已有的菜单id冲突，其它属性均可参照菜单项
 		//================================= 示例：设置user信息 =================================
 		//用户登录后，右上角可直接显示用户的头像和昵称
+		var  userHeadImage = '${user.headImage}';
 		sp.user = {
 		   username: '${user.account}',   // 昵称 
-		   avatar: '${user.headImage}'   // 头像地址  
+		   avatar: userHeadImage?userHeadImage:"${domain}/image/default_head.jpg"   // 头像地址  
 		}
  		//================================= 示例：设置登录后的头像处，下拉可以出现的选项  =================================
 		sp.dropList = [     // 头像点击处可操作的选项

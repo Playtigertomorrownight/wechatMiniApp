@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <el-dialog :visible="true" :center="true" :width="dialogWidth" :show-close="false" :top="top">
-        <div slot="title" class="dialog-title" >
+        <div slot="title" class="dialog-title" v-cloak>
             <h2> Hello, 你好 <br> <br>  欢迎登录到   <label> ${title} </label> </h2>  
         </div>
 	    <el-form :model="form" status-icon :rules="rules" ref="loginForm" :label-position="labelPosition" :hide-required-asterisk="false" @keyup.enter.native="submitForm('loginForm')">
@@ -42,7 +42,7 @@
 		      <el-checkbox v-model="form.rememberMe" label="2">记住登录状态</el-checkbox>
 		    </div>
 	    </el-form>
-	    <div slot="footer" class="dialog-footer">
+	    <div slot="footer" class="dialog-footer" v-cloak>
 	      <el-button style="width:100%;" type="primary" :disabled="buttonStatus" :loading="buttonLoading"  @click="submitForm('loginForm')">{{buttonText}}</el-button>
 	    </div>
     </el-dialog>

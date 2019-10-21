@@ -14,12 +14,12 @@ var sa_admin = new Vue({
 		title: '',//'SA-后台模板',				// 页面标题  
 		logo_url: '',	// logo地址 
 		icon_url: '',	// icon地址 
-		is_log: true,				// 是否打印日志 
 		github_url: 'https://github.com/click33/sa-admin',	// github地址 
 		default_active: '0',	// 默认的高亮菜单id
 		default_openeds: [],	// 默认的打开数组 
 		unique_opened: true,		// 是否保持只打开一个
 		menuList: [],		// 菜单集合 
+		titleList: ['后台管理首页'],
 		homePage: homePage,		// 主页page
 		nativePage: homePage,	// 当前正显示的Page 
 		pageList: [homePage],	// 页面集合
@@ -502,7 +502,9 @@ var sa_admin = new Vue({
 		},
 		// 转到指定slide 
 		slideTo: function(index) {
+			console.log("index = "+index);
 			this.mySwiper.slideTo(index, 300);
+			this.title = this.titleList[index];
 		},
 		// 根据page追加一个slide
 		addSlide: function(page) {
@@ -511,6 +513,7 @@ var sa_admin = new Vue({
 						'	<iframe src="' + page.url + '" id="iframe' + page.id + '" class="iframe" onload="' + onloadFn + '"></iframe>' + 
 						'</div>';
 			this.mySwiper.appendSlide(slide);
+			this.titleList.push(page.title);
 		},
 		// 更正slide大小 ms = 延时毫秒数
 		updateSlideSize: function(ms) {
@@ -521,17 +524,8 @@ var sa_admin = new Vue({
 		},
 	},
 	created:function(){
-		
 		// 打印日志 
-		setTimeout(function() {
-			if(this.is_log) {
-				console.log('欢迎使用sa-admin，当前版本：' + this.version + "，GitHub地址：" + this.github_url);
-				console.log('如在使用中发现任何bug或者疑问，请加入QQ群交流：782974737，点击加入：' + 'https://jq.qq.com/?_wv=1027&k=5DHN5Ib');
-			}
-		}.bind(this), 2000)
-		
-		
-
+		console.log("后台首页初始化完毕");
 	}
 });
 var sp = sa_admin;
@@ -574,14 +568,17 @@ setInterval(function() {
 		}
 		h -= 12;
 	}
+	h = h<10?'0'+h:h;
 	var m = da.getMinutes(); //分
+	m = m<10?'0'+m:m;
 	var s = da.getSeconds(); //秒
+	s= s<10?'0'+s:s;
 	var z = ['日', '一', '二', '三', '四', '五', '六'][da.getDay()] ; //周几
 	// z = z == 0 ? '日' : z;
 	var zong = "";
 
 	zong += Y + "-" + M + "-" + D + " " + sx + " " + h + ":" + m + ":" + s + " 周" + z;
 	sa_admin.now_time = zong;
-}, 1000)
+}, 500)
 
 

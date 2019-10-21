@@ -3,8 +3,43 @@
 <head>
   <#include "common/back_header.html" />
   <title>管理后台首页</title>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0.8%;
+      width: 97%;
+    }
+    #app {
+      padding: 10px;
+      padding-left: 20px;
+      background-color: white;
+    }
+    .el-tabs__item {
+      font-size: 15px;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
-   WELCOME TO BACK MANAGER PAGE
+  <div id="app">
+    <el-button @click="visible = true">Button</el-button>
+    <el-dialog :visible.sync="visible" title="Hello world">
+      <p>Try Element</p>
+    </el-dialog>
+  </div>
 </body>
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { visible: false }
+      },
+	  methods: {
+		  
+	  },
+      created : function() { //创建时
+		console.log("后台管理首页加载完毕");
+	  }
+    })
+  </script>
 </html>

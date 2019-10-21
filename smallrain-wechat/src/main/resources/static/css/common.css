@@ -1,0 +1,12 @@
+[v-cloak] {
+	display: none;
+}
+
+.menu-box-1::-webkit-scrollbar {
+	width: 0 !important
+}
+
+.menu-box-1 {
+	overflow: -moz-scrollbars-none;
+	-ms-overflow-style: none;
+}

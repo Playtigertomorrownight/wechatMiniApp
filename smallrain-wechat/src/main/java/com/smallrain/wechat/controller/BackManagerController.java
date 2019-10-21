@@ -24,12 +24,30 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/back")
 public class BackManagerController {
 
-  @GetMapping("/main")
-  public ModelAndView loginSuccess() {
-    User currentUser = ShiroUtil.getCurrentUser();
-    ModelAndView mv = new ModelAndView("back/main");
-    mv.addObject("user", currentUser);
-    return mv;
-  }
-  
+	/**
+	 * 后台管理 - 首页
+	 * 
+	 * @return
+	 */
+	@GetMapping("/main")
+	public ModelAndView backMain() {
+		User currentUser = ShiroUtil.getCurrentUser();
+		ModelAndView mv = new ModelAndView("back/main");
+		mv.addObject("user", currentUser);
+		return mv;
+	}
+
+	/**
+	 * 后台管理 - 菜单管理
+	 * 
+	 * @return
+	 */
+	@GetMapping("/menu")
+	public ModelAndView backMenu() {
+		User currentUser = ShiroUtil.getCurrentUser();
+		ModelAndView mv = new ModelAndView("back/menu");
+		mv.addObject("user", currentUser);
+		return mv;
+	}
+
 }
