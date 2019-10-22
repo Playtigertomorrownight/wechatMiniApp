@@ -18,8 +18,30 @@ import springfox.documentation.annotations.ApiIgnore;
 @Controller
 public class CommonController {
   
+  /**
+   * 登录成功后的跳转
+   * @return
+   */
   @GetMapping("/index")
   public ModelAndView loginSuccess() {
+    User currentUser = ShiroUtil.getCurrentUser();
+    if(null == currentUser) {
+      return new ModelAndView("redirect:/login");
+    }
+    log.info("当前登陆用户：{}",currentUser.getAccount());
+    //后期加上根据用户角色跳转前台页面或者后台
+    //roleService.getListByUserId(userId);
+    ModelAndView mv = new ModelAndView("back/index");
+    mv.addObject("user", currentUser);
+    return mv;
+  }
+  
+  /**
+   * 未授权提示页面
+   * @return
+   */
+  @GetMapping("/unauthorized")
+  public ModelAndView unauthorized() {
     User currentUser = ShiroUtil.getCurrentUser();
     if(null == currentUser) {
       return new ModelAndView("redirect:/login");

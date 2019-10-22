@@ -1,5 +1,6 @@
 package com.smallrain.wechat.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,8 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smallrain.wechat.models.user.entity.User;
 import com.smallrain.wechat.utils.ShiroUtil;
 
-import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
@@ -18,7 +17,6 @@ import springfox.documentation.annotations.ApiIgnore;
  *
  */
 
-@Slf4j
 @ApiIgnore
 @Controller
 @RequestMapping("/back")
@@ -42,6 +40,7 @@ public class BackManagerController {
 	 * 
 	 * @return
 	 */
+	@RequiresPermissions(value = "admin:menu")
 	@GetMapping("/menu")
 	public ModelAndView backMenu() {
 		User currentUser = ShiroUtil.getCurrentUser();

@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
@@ -32,10 +34,8 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class ShiroConfig {
 
-  @Autowired
+  @Resource
   private ShiroProperties shiroProperties;
-  @Autowired
-  private SmallrainRealm smallrainRealm;
   
   @Bean
   public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
@@ -68,20 +68,17 @@ public class ShiroConfig {
   }
 
   @Bean
-  public SecurityManager securityManager() {
+  @Autowired
+  public SecurityManager securityManager(SmallrainRealm smallrainRealm) {
       DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
       // 配置 SecurityManager，并注入 shiroRealm
-      securityManager.setRealm(smallrainRealm());
+      smallrainRealm.setCredentialsMatcher(hashedCredentialsMatcher()); // 原来在这里
+      securityManager.setRealm(smallrainRealm);
       // 配置 shiro session管理器
       securityManager.setSessionManager(sessionManager());
       // 配置 rememberMeCookie
       securityManager.setRememberMeManager(rememberMeManager());
       return securityManager;
-  }
-  
-  public SmallrainRealm smallrainRealm() {
-      smallrainRealm.setCredentialsMatcher(hashedCredentialsMatcher()); // 原来在这里
-      return smallrainRealm;
   }
   
   @Bean
