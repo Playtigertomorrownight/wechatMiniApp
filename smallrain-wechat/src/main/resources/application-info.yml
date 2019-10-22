@@ -2,4 +2,4 @@
 app:
   ssl: false  #是否开启https
   serverName: localhost  #域名
-  title: 和谐小刚刚     #应用名
+  title: Small Rain App     #应用名

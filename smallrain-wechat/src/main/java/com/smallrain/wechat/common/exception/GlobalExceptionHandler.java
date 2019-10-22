@@ -1,8 +1,11 @@
 package com.smallrain.wechat.common.exception;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +25,7 @@ import com.smallrain.wechat.utils.ExceptionCodeUtil;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
   /**
-   * 定义要捕获的异常 可以多个 @ExceptionHandler({})
+   * 自定义异常捕获
    *
    * @param request  request
    * @param e        exception
@@ -34,6 +37,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       response.setStatus(HttpStatus.BAD_REQUEST.value());
       SmallrainException exception = (SmallrainException) e;
       return Response.exception(exception.getCode(), ExceptionCodeUtil.getFailMessage("自定义异常", exception.getCode(), exception.getMessage()));
+  }
+  
+  /**
+   * 未授权异常捕获
+   *
+   * @param request  request
+   * @param e        exception
+   * @param response response
+   * @return 响应结果
+   */
+  @ExceptionHandler(UnauthorizedException.class)
+  public void unauthorizedExceptionHandler(HttpServletRequest request, final Exception e, HttpServletResponse response) {
+	  try {
+		response.sendRedirect("/unauthorized");
+	  } catch (IOException e1) {
+ 		e1.printStackTrace();
+	  }
   }
 
   /**

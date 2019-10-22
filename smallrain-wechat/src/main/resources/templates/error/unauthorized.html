@@ -1,0 +1,54 @@
+<!DOCTYPE>
+<html >
+<head>
+<#include "../common/header.html"/>
+<title>404-对不起！您访问的页面不存在</title>
+<style type="text/css">
+ *{
+    padding: 0px;
+    margin: 0px;
+ }
+ .txtbg403 {
+    background: url("${domain}/image/403.png") no-repeat center;
+    background-size: 65% 97%;
+    width: 100%;
+    height: 100%;
+  }
+  .buttons {
+    position: absolute;
+    bottom: 10%;
+    left: 40%;
+  }
+   
+</style>
+ 
+</head>
+<body >
+	<div id="app" class="txtbg403">
+	   <div class="buttons">
+	   <!-- 
+		   <el-button icon="el-icon-back"   type="primary" round @click="back">返回上一页</el-button>
+           <el-button style="margin-left: 5em;" icon="el-icon-s-home" @click="home" type="success" round>返回首页面</el-button>
+            -->
+		</div>
+    </div>
+</body>
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+    	  return {
+    		  
+    	  }
+      },
+	  methods: {
+		  back : function() {
+			  history.back();
+		  },
+		  home : function() {
+			  window.location.href = "${domain}/index";
+		  }
+	  }
+    })
+  </script>
+</html>
