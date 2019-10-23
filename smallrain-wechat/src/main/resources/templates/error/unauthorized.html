@@ -23,13 +23,11 @@
 </style>
  
 </head>
-<body >
+<body style="background: white;">
 	<div id="app" class="txtbg403">
-	   <div class="buttons">
-	   <!-- 
+	   <div class="buttons" v-if="showButton">
 		   <el-button icon="el-icon-back"   type="primary" round @click="back">返回上一页</el-button>
            <el-button style="margin-left: 5em;" icon="el-icon-s-home" @click="home" type="success" round>返回首页面</el-button>
-            -->
 		</div>
     </div>
 </body>
@@ -38,7 +36,11 @@
       el: '#app',
       data: function() {
     	  return {
-    		  
+    	  }
+      },
+      computed: {
+    	  showButton: function() {
+    		  return top.location == location;
     	  }
       },
 	  methods: {

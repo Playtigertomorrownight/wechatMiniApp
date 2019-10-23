@@ -1,8 +1,10 @@
 package com.smallrain.wechat.models.user.entity;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,7 +32,7 @@ public class User extends Model<User> {
 
     @ApiModelProperty(value = "用户名")
     private String name;
-
+    
     @ApiModelProperty(value = "用户账号")
     private String account;
 

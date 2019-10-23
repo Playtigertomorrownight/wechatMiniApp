@@ -1,9 +1,11 @@
 package com.smallrain.wechat.utils;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -19,6 +21,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.smallrain.wechat.common.annotations.ModelEditField;
 
 public class BaseUtils extends BeanUtils {
 
@@ -57,6 +60,31 @@ public class BaseUtils extends BeanUtils {
         }
       }
     }
+  }
+  
+  public static JSONObject resolveEntity(Class<?> clazz) {
+    JSONObject result = new JSONObject();
+    if(null==clazz) return result;
+    List<Field> fieldsList = new ArrayList<>();
+    Field[] fields = clazz.getDeclaredFields();
+    fieldsList.addAll(Arrays.asList(fields));
+    Class<?> superClazz = clazz.getSuperclass();
+    if (superClazz != null) {
+        Field[] superFields = superClazz.getDeclaredFields();
+        fieldsList.addAll(Arrays.asList(superFields));
+    }
+    List<String> names =  new ArrayList<>();
+    for(Field field:fieldsList) {
+      // 设置访问对象权限，保证对私有属性的访问
+      field.setAccessible(true);
+      ModelEditField mef = field.getAnnotation(ModelEditField.class);
+      if(null==mef) continue;  //没有该注解，跳过
+      String name = field.getName();
+      names.add(field.getName());
+      result.put(name, mef);
+    }
+    result.put("FIELD_ITEM_LIST",names);
+    return result;
   }
   
   /**
