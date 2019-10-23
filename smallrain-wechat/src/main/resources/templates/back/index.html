@@ -39,7 +39,7 @@
                   <div v-for="(menu2, index) in menu.childList" :key="index">
                    <!-- 2 如果是子菜单 -->
                     <el-menu-item v-if="menu2.childList == null" :index="menu2.id + '' ">
-                     <i :class="menu.icon" :title="menu.name"></i>
+                     <i :class="menu2.icon" :title="menu2.name"></i>
                      <span class="menu-name menu-name-2">{{menu2.name}}</span>
                     </el-menu-item>
                     <!-- 2 如果是父菜单 -->

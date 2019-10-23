@@ -42,10 +42,19 @@ public class BackManagerController {
 	//@RequiresPermissions(value = "admin:menu")
 	@GetMapping("/menu")
 	public ModelAndView backMenu() {
-		User currentUser = ShiroUtil.getCurrentUser();
 		ModelAndView mv = new ModelAndView("back/menu");
-		mv.addObject("user", currentUser);
-		
+		return mv;
+	}
+	
+	/**
+	 * 后台管理 - 菜单管理
+	 * 
+	 * @return
+	 */
+	//@RequiresPermissions(value = "admin:menu")
+	@GetMapping("/user")
+	public ModelAndView backUser() {
+		ModelAndView mv = new ModelAndView("back/user");
 		return mv;
 	}
 

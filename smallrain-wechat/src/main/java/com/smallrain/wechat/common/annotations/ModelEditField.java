@@ -34,6 +34,18 @@ public @interface ModelEditField {
   boolean edit() default true;
   
   /**
+   * 是否在列表显示
+   * @return
+   */
+  boolean show() default false;
+  
+  /**
+   * 列表显示时的宽度
+	 * @return
+	 */
+  int width() default 100;
+  
+  /**
    * 是否必需
    * @return
    */

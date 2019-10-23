@@ -16,7 +16,7 @@ public enum InputType {
   TIME,  //时间
   DATE_TIME, // 日期时间
   SELECT, //选择器
-  FILE  //文件
+  IMAGE  //图片
   
   
 }
