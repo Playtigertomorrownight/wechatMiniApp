@@ -20,6 +20,7 @@ import org.springframework.beans.FatalBeanException;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.smallrain.wechat.common.annotations.ModelEditField;
 
@@ -81,7 +82,7 @@ public class BaseUtils extends BeanUtils {
       if(null==mef) continue;  //没有该注解，跳过
       String name = field.getName();
       names.add(field.getName());
-      result.put(name, mef);
+      result.put(name, JSON.toJSON(mef));
     }
     result.put("FIELD_ITEM_LIST",names);
     return result;

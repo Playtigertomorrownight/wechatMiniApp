@@ -34,94 +34,23 @@ body {
 </head>
 <body>
 	<div id="app">
-		<div>
-		  <div class="buttons">
-		     <el-button type="primary" icon="el-icon-plus" size="small" @click="addModel">添加{{modelName}}</el-button> 
-		     <el-button type="primary" icon="el-icon-delete" :disabled="!isDeleteEnable" size="small" @click="deleteModels">批量删除{{modelName}}</el-button>
-		  </div>
-		  <div class="list_name">{{modelName}}列表</div>
-		    <template>
-			  <el-table :data="tableData" border tyle="width: 100%" @selection-change="selectionChange">
-			    <el-table-column type="selection" width="50"> </el-table-column>
-			    
-			    <el-table-column v-for="(item, index) in bean.FIELD_ITEM_LIST" v-if="bean[item].show" :key="item"
-			     :prop="item" :label="bean[item].name" :width="bean[item].with">
-			    </el-table-column>
-			    
-			    <el-table-column fixed="right" label="操作" width="200"> 
-				  <template slot-scope="scope"> 
-				    <el-button type="text" size="small" @click="viewModel(scope.row)">查看</el-button>
-			        <el-button type="text" size="small" @click="editModel(scope.row)">编辑</el-button> 
-			      </template> 
-			    </el-table-column>
-			  </el-table>
-		   </template>
-		</div>
-		<div class="page">
-		    <el-pagination @size-change="pageSizeChange" @current-change="currentChange"
-		      :current-page="currentPage"
-		      :page-sizes="pageSizes"
-		      :page-size=pageSize
-		      layout="total, sizes, prev, pager, next, jumper"
-		      :total="totalCount">
-		    </el-pagination>
-		  </div>
-	</div>
+		<model-list model="user"> </model-list>
+    </div>
 </body>
+<#include "common/components.html" />
 <script>
-    var bean = {"realName":{"add":true,"size":64,"edit":true,"name":"真实姓名","pattern":"","width":100,"show":false,"type":"TEXT","required":false},"password":{"add":true,"size":64,"edit":true,"name":"密码","pattern":"","width":100,"show":false,"type":"PASSWORD","required":true},"role":{"add":true,"size":64,"edit":true,"name":"角色","pattern":"","width":100,"show":false,"type":"CHECKBOX","required":false},"signature":{"add":true,"size":64,"edit":true,"name":"签名","pattern":"","width":100,"show":false,"type":"TEXT","required":false},"phone":{"add":true,"size":64,"edit":true,"name":"手机号","pattern":"","width":100,"show":true,"type":"TEXT","required":false},"identity":{"add":true,"size":64,"edit":true,"name":"身份证号","pattern":"","width":100,"show":false,"type":"TEXT","required":false},"FIELD_ITEM_LIST":["account","password","name","realName","signature","sex","phone","email","identity","role","headImage"],"sex":{"add":true,"size":64,"edit":true,"name":"性别","pattern":"","width":100,"show":true,"type":"RADIO","required":true},"headImage":{"add":true,"size":64,"edit":true,"name":"头像","pattern":"","width":100,"show":false,"type":"FILE","required":false},"name":{"add":true,"size":64,"edit":false,"name":"昵称","pattern":"","width":100,"show":true,"type":"TEXT","required":true},"account":{"add":true,"size":64,"edit":true,"name":"账号","pattern":"","width":100,"show":true,"type":"TEXT","required":true},"email":{"add":true,"size":64,"edit":true,"name":"邮箱","pattern":"","width":100,"show":true,"type":"TEXT","required":false}};
-	users = [{"id":"user_58d7829928214f7399dcf78edf49f889","name":"管理员","account":"admin","password":"3b53cccf97fcdae4d6b9e5430de96906","salt":"1a59af09eb27a20dc4756ee6e85f4944","sex":0,"phone":"13027711253","email":null,"identity":null,"headImage":"","role":null,"registerTime":[2019,10,15,21,57,9],"bandIp":null,"realName":"admin","signature":null,"status":0,"credentialsSalt":"user-credentials-salt-1a59af09eb27a20dc4756ee6e85f4944"},{"id":"user_774cda51938948ecb434ff7483b9f70b","name":"wangying","account":"wangying-ac","password":"123456","salt":"","sex":0,"phone":null,"email":null,"identity":null,"headImage":"","role":"role_260f88be7bab4aecb96f0ea3be776045","registerTime":[2019,9,26,22,20,29],"bandIp":null,"realName":"jack","signature":null,"status":0,"credentialsSalt":"user-credentials-salt-"},{"id":"user_978ecc79484341ed9da5da2ae5ef2001","name":"wanglianyu","account":"wanglianyu-ac","password":"123456","salt":"","sex":0,"phone":null,"email":null,"identity":null,"headImage":"","role":"role_8ebfbb26d7434af09aaef2e0b446dca3","registerTime":[2019,9,26,22,21,24],"bandIp":null,"realName":"wanglianyu","signature":null,"status":0,"credentialsSalt":"user-credentials-salt-"},{"id":"user_ed7b817a708b4308adf3572a2a836ae1","name":"wangpeng","account":"wangpeng-ac","password":"123456","salt":"","sex":0,"phone":null,"email":null,"identity":null,"headImage":"","role":"role_a9dfd85bd0a44ae18b3e7999c9d91554","registerTime":[2019,9,26,22,21,2],"bandIp":null,"realName":"wangpeng","signature":null,"status":0,"credentialsSalt":"user-credentials-salt-"}];
     new Vue({
 		el : '#app',
 		data : function() {
 			return {
-				modelName: '用户',
-				bean: bean,  //实体信息
-				tableData: users,  //表单内容
-				multipleSelection: [],  //多选列表
-				currentPage: 0, 
-				pageSizes: [10, 20, 30, 40],
-				pageSize: 20,
-				totalCount: 400
 				
 			}
 		},
-		computed: {
-			isDeleteEnable() {
-				return this.multipleSelection && this.multipleSelection.length;
-			}
-		},
 		methods : {
-			selectionChange(val) {  //多选时
-			   this.multipleSelection = val.map((item,index,arr) => {
-				    return item.id //新数组为10,20,30,40
-				})
-			},
-			deleteModels() {   //批量删除
-				console.log("批量删除");
-			    console.log(this.multipleSelection);
-			},
-			addModel() {   //添加
-				console.log("添加");
-			},
-			viewModel(model) {   //查看
-				console.log("查看");
-			    console.log(model);
-			},
-			editModel(model) {   //编辑
-				console.log("编辑");
-			    console.log(model);
-			},
-			pageSizeChange(val) {   //分页大小变化
-				console.log("分页大小变化:"+val);
-			},
-			currentChange(val) {   //当前页变化
-				console.log("当前页变化:"+val);
-			}
-			
 		},
 		created : function() { //创建时
-			console.log("用户管理列表加载完毕");
+		},
+		beforeCreate: function() {
 		}
 	})
 	

@@ -53,7 +53,7 @@
                    callback('HTTP_ERROR');
                    return ;
                }
-               callback(response);
+               callback(response.data?response.data:response);
           }).catch(function (error) {
               console.log(error);
               content.$message.error('请求异常: '+error);
