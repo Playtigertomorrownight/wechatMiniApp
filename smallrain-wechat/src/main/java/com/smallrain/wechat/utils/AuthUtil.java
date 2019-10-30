@@ -5,7 +5,7 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
-import com.smallrain.wechat.models.user.entity.User;
+import com.smallrain.wechat.models.user.entity.SysUser;
 
 public class AuthUtil {
 
@@ -19,7 +19,7 @@ public class AuthUtil {
    * 
    * @param user
    */
-  public static void encryptPassword(User user, boolean init) {
+  public static void encryptPassword(SysUser user, boolean init) {
     // User对象包含最基本的字段Username和Password
     if (init) {
       user.setSalt(randomNumberGenerator.nextBytes().toHex());

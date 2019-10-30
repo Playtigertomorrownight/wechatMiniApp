@@ -9,9 +9,9 @@ import org.yaml.snakeyaml.Yaml;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smallrain.wechat.common.exception.SmallrainException;
-import com.smallrain.wechat.models.menu.entity.Menu;
-import com.smallrain.wechat.models.role.entity.Role;
-import com.smallrain.wechat.models.user.entity.User;
+import com.smallrain.wechat.models.menu.entity.SysMenu;
+import com.smallrain.wechat.models.role.entity.SysRole;
+import com.smallrain.wechat.models.user.entity.SysUser;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +47,7 @@ public class EntityCheckUtil {
    * @return
    * @throws SmallrainException 
    */
-  public static void userFieldCheck(User user) throws SmallrainException {
+  public static void userFieldCheck(SysUser user) throws SmallrainException {
     if(null == user) {
       throw new SmallrainException(601,"用户信息为空");
     }
@@ -71,7 +71,7 @@ public class EntityCheckUtil {
    * @return
    * @throws SmallrainException 
    */
-  public static void roleFieldCheck(Role role) throws SmallrainException {
+  public static void roleFieldCheck(SysRole role) throws SmallrainException {
     if(null == role) {
       throw new SmallrainException(601,"角色信息为空");
     }
@@ -91,7 +91,7 @@ public class EntityCheckUtil {
    * @return
    * @throws SmallrainException 
    */
-  public static void menuFieldCheck(Menu menu) throws SmallrainException {
+  public static void menuFieldCheck(SysMenu menu) throws SmallrainException {
     if(null == menu) {
       throw new SmallrainException(601,"角色信息为空");
     }

@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import com.alibaba.fastjson.JSONObject;
 import com.smallrain.wechat.common.manager.token.TokenManager;
 import com.smallrain.wechat.common.model.Response;
-import com.smallrain.wechat.models.user.entity.User;
+import com.smallrain.wechat.models.user.entity.SysUser;
 import com.smallrain.wechat.utils.ShiroUtil;
 import com.smallrain.wechat.utils.SpringUtil;
 
@@ -33,7 +33,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	@Override
 	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
 		String loginToken = RestfulFilter.getToken(request);
-		User user = ShiroUtil.getCurrentUser();
+		SysUser user = ShiroUtil.getCurrentUser();
 		if(null==user) {
 		  log.info("用户为空，退出成功");
 		  return super.preHandle(request, response);

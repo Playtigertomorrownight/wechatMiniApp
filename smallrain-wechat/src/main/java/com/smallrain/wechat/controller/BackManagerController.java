@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.smallrain.wechat.models.user.entity.User;
+import com.smallrain.wechat.models.user.entity.SysUser;
 import com.smallrain.wechat.utils.ShiroUtil;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -28,7 +28,7 @@ public class BackManagerController {
 	 */
 	@GetMapping("/main")
 	public ModelAndView backMain() {
-		User currentUser = ShiroUtil.getCurrentUser();
+		SysUser currentUser = ShiroUtil.getCurrentUser();
 		ModelAndView mv = new ModelAndView("back/main");
 		mv.addObject("user", currentUser);
 		return mv;

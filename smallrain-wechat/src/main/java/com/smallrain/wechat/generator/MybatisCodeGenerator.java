@@ -25,9 +25,9 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
  */
 public class MybatisCodeGenerator {
   
-  private static final String MODEL_NAME = "User";
+  private static final String MODEL_NAME = "";
   
-  private static final String TABLES_NAME = "user";   // ，分割
+  private static final String TABLES_NAME = "";   // ，分割
 
   public static void main(String[] args) {
 

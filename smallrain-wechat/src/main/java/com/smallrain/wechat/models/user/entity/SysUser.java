@@ -1,10 +1,8 @@
 package com.smallrain.wechat.models.user.entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-
+import java.time.LocalDateTime;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,13 +15,13 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author wangying
- * @since 2019-09-29
+ * @since 2019-10-30
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="User对象", description="")
-public class User extends Model<User> {
+@ApiModel(value="SysUser对象", description="")
+public class SysUser extends Model<SysUser> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +30,7 @@ public class User extends Model<User> {
 
     @ApiModelProperty(value = "用户名")
     private String name;
-    
+
     @ApiModelProperty(value = "用户账号")
     private String account;
 
@@ -54,7 +52,7 @@ public class User extends Model<User> {
     private String identity;
 
     @ApiModelProperty(value = "头像")
-    private String headImage="";
+    private String headImage = "";
 
     @ApiModelProperty(value = "用户角色ID")
     private String role;
@@ -73,17 +71,16 @@ public class User extends Model<User> {
 
     @ApiModelProperty(value = "删除标记")
     private Integer status;
+    
+    public String getCredentialsSalt() {
+        // TODO Auto-generated method stub
+        return "user-credentials-salt-"+salt;
+      }
 
 
     @Override
     protected Serializable pkVal() {
         return this.id;
-    }
-
-
-    public String getCredentialsSalt() {
-      // TODO Auto-generated method stub
-      return "user-credentials-salt-"+salt;
     }
 
 }

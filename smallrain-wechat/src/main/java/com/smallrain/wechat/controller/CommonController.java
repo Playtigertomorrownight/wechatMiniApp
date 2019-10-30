@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONObject;
 import com.smallrain.wechat.common.model.Response;
 import com.smallrain.wechat.models.dto.DtoUtils;
-import com.smallrain.wechat.models.user.entity.User;
+import com.smallrain.wechat.models.user.entity.SysUser;
 import com.smallrain.wechat.utils.ShiroUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class CommonController {
 	 */
 	@GetMapping("/index")
 	public ModelAndView loginSuccess() {
-		User currentUser = ShiroUtil.getCurrentUser();
+		SysUser currentUser = ShiroUtil.getCurrentUser();
 		if (null == currentUser) {
 			return new ModelAndView("redirect:/login");
 		}

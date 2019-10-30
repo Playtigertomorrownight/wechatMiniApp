@@ -95,7 +95,7 @@
                that.bean = res.data.beanInfo;
             });
             //加载数据列表
-            sendRequest(that,'${domain}/api/v1/'+this.model.toLowerCase(),'GET',null,function(res){
+            sendRequest(that,'${domain}/api/v1/models/'+this.model.toLowerCase(),'GET',null,function(res){
                 console.log(res);
                that.tableData = res.data;
             });

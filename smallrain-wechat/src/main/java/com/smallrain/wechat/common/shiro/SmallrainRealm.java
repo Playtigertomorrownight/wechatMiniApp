@@ -24,12 +24,12 @@ import org.springframework.stereotype.Component;
 
 import com.smallrain.wechat.common.Constants;
 import com.smallrain.wechat.common.exception.SmallrainException;
-import com.smallrain.wechat.models.menu.entity.Menu;
-import com.smallrain.wechat.models.menu.service.MenuService;
-import com.smallrain.wechat.models.role.entity.Role;
-import com.smallrain.wechat.models.role.service.RoleService;
-import com.smallrain.wechat.models.user.entity.User;
-import com.smallrain.wechat.models.user.service.UserService;
+import com.smallrain.wechat.models.menu.entity.SysMenu;
+import com.smallrain.wechat.models.menu.service.SysMenuService;
+import com.smallrain.wechat.models.role.entity.SysRole;
+import com.smallrain.wechat.models.role.service.SysRoleService;
+import com.smallrain.wechat.models.user.entity.SysUser;
+import com.smallrain.wechat.models.user.service.SysUserService;
 import com.smallrain.wechat.utils.AuthUtil;
 import com.smallrain.wechat.utils.ShiroUtil;
 
@@ -42,13 +42,13 @@ public class SmallrainRealm extends AuthorizingRealm {
   // 用户对应的角色信息与权限信息都保存在数据库中，通过UserService he RoleService获取数据
 
   @Autowired
-  private UserService userService;
+  private SysUserService userService;
 
   @Autowired
-  private RoleService roleService;
+  private SysRoleService roleService;
   
   @Autowired
-  private MenuService menuService;
+  private SysMenuService menuService;
 
   /**
    * 获取身份验证信息 Shiro中，最终是通过 Realm 来获取应用程序中的用户、角色及权限信息的。
@@ -63,7 +63,7 @@ public class SmallrainRealm extends AuthorizingRealm {
     log.info("————身份认证方法————");
     UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
     // 从数据库获取对应用户名密码的用户
-    User user = null;
+    SysUser user = null;
     try {
       user = userService.getUserByUserName(token.getUsername());
     } catch (SmallrainException e) {
@@ -94,7 +94,7 @@ public class SmallrainRealm extends AuthorizingRealm {
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
     log.info("————权限认证————");
     SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-    User user = ShiroUtil.getCurrentUser();
+    SysUser user = ShiroUtil.getCurrentUser();
     if (null == user) {
       String username = (String) SecurityUtils.getSubject().getPrincipal();
       try {
@@ -104,15 +104,15 @@ public class SmallrainRealm extends AuthorizingRealm {
       }
     }
     //获取并设置用户角色
-    List<Role> roles = roleService.getListByUserId(user.getId());
+    List<SysRole> roles = roleService.getListByUserId(user.getId());
     Set<String> roleNames = roles.stream().filter(r -> null!=r)
-        .map(Role::getName).collect(Collectors.toSet());
+        .map(SysRole::getName).collect(Collectors.toSet());
     info.setRoles(roleNames);
     //获取并设置用户菜单权限
-    List<Menu> menuList = menuService.getListByUserId(user.getId());
+    List<SysMenu> menuList = menuService.getListByUserId(user.getId());
     ShiroUtil.setPermissionSession(menuList);
     Set<String> permissions = menuList.stream().filter(m -> null!=m && !StringUtils.isEmpty(m.getPermission()))
-        .map(Menu::getPermission).collect(Collectors.toSet());
+        .map(SysMenu::getPermission).collect(Collectors.toSet());
     info.setStringPermissions(permissions);
     return info;
   }
@@ -124,8 +124,8 @@ public class SmallrainRealm extends AuthorizingRealm {
   protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
     SimplePrincipalCollection principalCollection = (SimplePrincipalCollection) principals;
     Object object = principalCollection.getPrimaryPrincipal();
-    if (object instanceof User) {
-      User user = (User) object;
+    if (object instanceof SysUser) {
+    	SysUser user = (SysUser) object;
       return StringUtils.join("authorization:cache:key:users:", user.getId());
     }
     return super.getAuthorizationCacheKey(principals);

@@ -1,4 +1,4 @@
-package ${package.Controller};
+package com.smallrain.wechat.models.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,50 +11,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.smallrain.wechat.common.model.Response;
 import com.smallrain.wechat.common.exception.SmallrainException;
-import ${package.Service}.${table.serviceName};
-import ${package.Entity}.${entity};
+import com.smallrain.wechat.models.user.service.SysUserService;
+import com.smallrain.wechat.models.user.entity.SysUser;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  *
- * @author ${author}
- * @since ${date}
+ * @author wangying
+ * @since 2019-10-30
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/models/${table.entityPath}")
-public class ${table.controllerName} {
+@RequestMapping("/api/v1/models/user")
+public class SysUserController {
 
     @Autowired
-    public ${table.serviceName} ${table.entityPath}Service;
+    public SysUserService sysUserService;
 
     @GetMapping("")
     public Response list() throws SmallrainException {
-      log.info("获取  ${entity} 列表");
-      return Response.success(${table.entityPath}Service.getList());
+      log.info("获取  SysUser 列表");
+      return Response.success(sysUserService.getList());
     }
     
     @PostMapping("")
-    public Response add(@RequestBody ${entity} entity) throws SmallrainException  {
-      log.info("添加一条 ${entity} 记录");
-      return Response.success(${table.entityPath}Service.add(entity));
+    public Response add(@RequestBody SysUser entity) throws SmallrainException  {
+      log.info("添加一条 SysUser 记录");
+      return Response.success(sysUserService.add(entity));
     }
     
     @PutMapping("")
-    public Response put(@RequestBody ${entity} entity) throws SmallrainException  {
-      log.info("更新一条 ${entity} 记录");
-      return Response.success(${table.entityPath}Service.update(entity));
+    public Response put(@RequestBody SysUser entity) throws SmallrainException  {
+      log.info("更新一条 SysUser 记录");
+      return Response.success(sysUserService.update(entity));
     }
     
     @GetMapping("/{id}")
     public Response get(@PathVariable String id) throws SmallrainException  {
-      log.info("根据 ID：{} 获取一条 ${entity} 记录",id);
-      return Response.success(${table.entityPath}Service.getOne(id));
+      log.info("根据 ID：{} 获取一条 SysUser 记录",id);
+      return Response.success(sysUserService.getOne(id));
     }
     
     @DeleteMapping("/{id}")
     public Response delete(@PathVariable String id) throws SmallrainException  {
-      log.info("根据 ID：{} 删除一条 ${entity} 记录",id);
-      return Response.success(${table.entityPath}Service.delete(id));
+      log.info("根据 ID：{} 删除一条 SysUser 记录",id);
+      return Response.success(sysUserService.delete(id));
     }
 }
