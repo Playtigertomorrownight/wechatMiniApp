@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,40 +64,44 @@ public class BaseUtils extends BeanUtils {
       }
     }
   }
-  
+
   public static JSONObject resolveEntity(Class<?> clazz) {
     JSONObject result = new JSONObject();
-    if(null==clazz) return result;
+    if (null == clazz)
+      return result;
     List<Field> fieldsList = new ArrayList<>();
     Field[] fields = clazz.getDeclaredFields();
     fieldsList.addAll(Arrays.asList(fields));
     Class<?> superClazz = clazz.getSuperclass();
     if (superClazz != null) {
-        Field[] superFields = superClazz.getDeclaredFields();
-        fieldsList.addAll(Arrays.asList(superFields));
+      Field[] superFields = superClazz.getDeclaredFields();
+      fieldsList.addAll(Arrays.asList(superFields));
     }
-    List<String> names =  new ArrayList<>();
-    for(Field field:fieldsList) {
+    List<String> names = new ArrayList<>();
+    for (Field field : fieldsList) {
       // 设置访问对象权限，保证对私有属性的访问
       field.setAccessible(true);
       ModelEditField mef = field.getAnnotation(ModelEditField.class);
-      if(null==mef) continue;  //没有该注解，跳过
+      if (null == mef)
+        continue; // 没有该注解，跳过
       String name = field.getName();
       names.add(field.getName());
       result.put(name, JSON.toJSON(mef));
     }
-    result.put("FIELD_ITEM_LIST",names);
+    result.put("FIELD_ITEM_LIST", names);
     return result;
   }
-  
+
   /**
    * 检查独享是否包含必须属性
+   * 
    * @param source
    * @param neededProperties
    * @return
    */
   public static String checkBeanNeededField(Object source, @Nullable JSONObject neededProperties) {
-    if(null==neededProperties||neededProperties.isEmpty()) return null;
+    if (null == neededProperties || neededProperties.isEmpty())
+      return null;
     Class<?> actualEditable = source.getClass();
     PropertyDescriptor[] targetPds = getPropertyDescriptors(actualEditable);
     StringBuilder result = new StringBuilder();
@@ -104,7 +110,7 @@ public class BaseUtils extends BeanUtils {
       if (readMethod != null && neededProperties.containsKey((targetPd.getName()))) {
         try {
           Object value = readMethod.invoke(source);
-          if(null==value || StringUtils.isEmpty(value.toString())) {
+          if (null == value || StringUtils.isEmpty(value.toString())) {
             result.append(neededProperties.get(targetPd.getName())).append("、");
           }
         } catch (Throwable ex) {
@@ -113,11 +119,27 @@ public class BaseUtils extends BeanUtils {
         }
       }
     }
-    if(result.length()>0) {
+    if (result.length() > 0) {
       result.insert(0, "缺少必传字段：");
-      return result.substring(0,result.length()-1);
+      return result.substring(0, result.length() - 1);
     }
     return null;
+  }
+  
+  /**
+   * 检查独享是否包含必须属性
+   * 
+   * @param source
+   * @param neededProperties
+   * @return
+   */
+  public static boolean checkBeanHasField(Class<?> clazz, String field) {
+    if(StringUtils.isEmpty(field)) return false;
+    PropertyDescriptor[] targetPds = getPropertyDescriptors(clazz);
+    for (PropertyDescriptor targetPd : targetPds) {
+      if(targetPd.getName().equals(field)) return true;
+    }
+    return false;
   }
 
   /**
@@ -126,14 +148,15 @@ public class BaseUtils extends BeanUtils {
    * @return
    */
   public static String createUuid(String... prefixs) {
-    String prefix = null!=prefixs?prefixs[0]:"";
+    String prefix = null != prefixs ? prefixs[0] : "";
     // 穿建一个Uuid 去掉“-”符号
     String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-    //大于32就截取32
-    uuid = uuid.length()>32?uuid.substring(0,32):uuid;
-    //加前缀
-    if(StringUtils.isBlank(prefix) || prefix.length() > 31) return uuid;
-    return String.format("%s_%s", prefix,uuid);
+    // 大于32就截取32
+    uuid = uuid.length() > 32 ? uuid.substring(0, 32) : uuid;
+    // 加前缀
+    if (StringUtils.isBlank(prefix) || prefix.length() > 31)
+      return uuid;
+    return String.format("%s_%s", prefix, uuid);
   }
 
   /**
@@ -172,7 +195,7 @@ public class BaseUtils extends BeanUtils {
     if (StringUtils.isBlank(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
       ipAddress = request.getRemoteAddr();
       if (StringUtils.isBlank(ipAddress) || ipAddress.equals("0:0:0:0:0:0:0:1")) {
-        InetAddress inet = null;    // 根据网卡取本机配置的IP
+        InetAddress inet = null; // 根据网卡取本机配置的IP
         try {
           inet = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
@@ -188,6 +211,19 @@ public class BaseUtils extends BeanUtils {
       }
     }
     return ipAddress;
+  }
+
+  private static Pattern humpPattern = Pattern.compile("[A-Z]");
+
+  /** 驼峰转下划线,效率比上面高 */
+  public static String humpToLine(String str) {
+    Matcher matcher = humpPattern.matcher(str);
+    StringBuffer sb = new StringBuffer();
+    while (matcher.find()) {
+      matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
+    }
+    matcher.appendTail(sb);
+    return sb.toString();
   }
 
 }

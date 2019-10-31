@@ -1,9 +1,11 @@
 package com.smallrain.wechat.models.menu.service;
 
-import com.smallrain.wechat.models.menu.entity.SysMenu;
-
-import com.smallrain.wechat.common.exception.SmallrainException;
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.smallrain.wechat.common.exception.SmallrainException;
+import com.smallrain.wechat.common.model.QueryParam;
+import com.smallrain.wechat.models.menu.entity.SysMenu;
 
 /**
  *
@@ -12,7 +14,7 @@ import java.util.List;
  */
 public interface SysMenuService {
   
-  public List<SysMenu> getList() throws SmallrainException;
+  public IPage<SysMenu> getList(QueryParam<SysMenu> param) throws SmallrainException;
   
   public SysMenu getOne(String id) throws SmallrainException;
   

@@ -16,4 +16,5 @@ import com.smallrain.wechat.models.user.entity.SysUser;
 @Mapper
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
+  
 }

@@ -1,9 +1,9 @@
 package com.smallrain.wechat.models.user.service;
 
-import com.smallrain.wechat.models.user.entity.SysUser;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.smallrain.wechat.common.exception.SmallrainException;
-import java.util.List;
+import com.smallrain.wechat.common.model.QueryParam;
+import com.smallrain.wechat.models.user.entity.SysUser;
 
 /**
  *
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface SysUserService {
   
-  public List<SysUser> getList() throws SmallrainException;
+  public IPage<SysUser> getList(QueryParam<SysUser> param) throws SmallrainException;
   
   public SysUser getOne(String id) throws SmallrainException;
   

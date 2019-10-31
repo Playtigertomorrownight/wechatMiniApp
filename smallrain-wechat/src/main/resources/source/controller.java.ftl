@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.smallrain.wechat.common.model.Response;
+import org.springframework.web.bind.annotation.RequestBody;
+import com.smallrain.wechat.common.model.QueryParam;
 import com.smallrain.wechat.common.exception.SmallrainException;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
@@ -28,9 +30,10 @@ public class ${table.controllerName} {
     @Autowired
     public ${table.serviceName} ${table.entityPath}Service;
 
-    @GetMapping("")
-    public Response list() throws SmallrainException {
-      log.info("获取  ${entity} 列表");
+    @GetMapping("/list")
+    public Response list(@RequestBody String query) throws SmallrainException {
+      log.info("获取   ${entity} 列表, 参数:{}",query);
+      QueryParam<${entity}> param = new QueryParam<>(query,${entity}.class);
       return Response.success(${table.entityPath}Service.getList());
     }
     

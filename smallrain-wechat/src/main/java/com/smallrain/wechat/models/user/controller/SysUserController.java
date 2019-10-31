@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.smallrain.wechat.common.model.Response;
+
 import com.smallrain.wechat.common.exception.SmallrainException;
-import com.smallrain.wechat.models.user.service.SysUserService;
+import com.smallrain.wechat.common.model.QueryParam;
+import com.smallrain.wechat.common.model.Response;
 import com.smallrain.wechat.models.user.entity.SysUser;
+import com.smallrain.wechat.models.user.service.SysUserService;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -28,10 +31,11 @@ public class SysUserController {
     @Autowired
     public SysUserService sysUserService;
 
-    @GetMapping("")
-    public Response list() throws SmallrainException {
-      log.info("获取  SysUser 列表");
-      return Response.success(sysUserService.getList());
+    @PostMapping("/list")
+    public Response list(@RequestBody String query) throws SmallrainException {
+      log.info("获取  SysUser 列表, 参数:{}",query);
+      QueryParam<SysUser> param = new QueryParam<>(query,SysUser.class);
+      return Response.success(sysUserService.getList(param));
     }
     
     @PostMapping("")

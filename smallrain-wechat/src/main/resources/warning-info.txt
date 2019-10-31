@@ -1,0 +1,23 @@
+1. QueryParam 系列化字符串:
+  {
+    "pageNum":1,
+    "pageSize":12,
+    "conditions":[
+        {
+          "colum": "id",
+          "value": "sjgs",
+          "operate": "eq",
+          "or": [
+            {
+              "colum": "id",
+              "value": "sjgs",
+              "operate": "eq",
+              "or": []
+            }]
+        },{}
+        ],
+    "searchCount": true,
+    "orderItem": 
+       { "column":"id","asc":false}
+  }
+  

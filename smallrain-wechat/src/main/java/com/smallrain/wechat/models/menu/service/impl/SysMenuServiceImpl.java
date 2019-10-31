@@ -7,8 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.smallrain.wechat.common.exception.SmallrainException;
+import com.smallrain.wechat.common.model.QueryParam;
 import com.smallrain.wechat.models.menu.entity.SysMenu;
 import com.smallrain.wechat.models.menu.mapper.SysMenuMapper;
 import com.smallrain.wechat.models.menu.service.SysMenuService;
@@ -33,10 +35,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 	private SysMenuMapper menuMapper;
 	
 	@Override
-	public List<SysMenu> getList() throws SmallrainException {
-		// TODO Auto-generated method stub
-		return this.list();
-	}
+  public IPage<SysMenu> getList(QueryParam<SysMenu> param) throws SmallrainException {
+    // TODO Auto-generated method stub
+	  return this.page(param.getPage(), param.getQueryWrapper());
+  }
 
 	@Override
 	public SysMenu getOne(String id) throws SmallrainException {

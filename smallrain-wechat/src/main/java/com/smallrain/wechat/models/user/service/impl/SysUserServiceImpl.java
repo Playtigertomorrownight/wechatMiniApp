@@ -8,8 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.smallrain.wechat.common.exception.SmallrainException;
+import com.smallrain.wechat.common.model.QueryParam;
 import com.smallrain.wechat.models.user.entity.SysUser;
 import com.smallrain.wechat.models.user.mapper.SysUserMapper;
 import com.smallrain.wechat.models.user.service.SysUserService;
@@ -31,10 +33,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
+  
 	@Override
-	public List<SysUser> getList() throws SmallrainException {
+	public IPage<SysUser> getList(QueryParam<SysUser> param) throws SmallrainException {
 		// TODO Auto-generated method stub
-		return this.list();
+	  return this.page(param.getPage(), param.getQueryWrapper());
 	}
 
 	@Override

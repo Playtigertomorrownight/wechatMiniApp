@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.smallrain.wechat.common.model.Response;
+
 import com.smallrain.wechat.common.exception.SmallrainException;
-import com.smallrain.wechat.models.menu.service.SysMenuService;
+import com.smallrain.wechat.common.model.QueryParam;
+import com.smallrain.wechat.common.model.Response;
 import com.smallrain.wechat.models.menu.entity.SysMenu;
+import com.smallrain.wechat.models.menu.service.SysMenuService;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -28,10 +31,11 @@ public class SysMenuController {
     @Autowired
     public SysMenuService sysMenuService;
 
-    @GetMapping("")
-    public Response list() throws SmallrainException {
+    @GetMapping("/list")
+    public Response list(@RequestBody String query) throws SmallrainException {
       log.info("获取  SysMenu 列表");
-      return Response.success(sysMenuService.getList());
+      QueryParam<SysMenu> param = new QueryParam<>(query,SysMenu.class);
+      return Response.success(sysMenuService.getList(param));
     }
     
     @PostMapping("")
