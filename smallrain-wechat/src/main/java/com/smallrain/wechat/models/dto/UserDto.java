@@ -22,7 +22,7 @@ public class UserDto {
   @ModelEditField(name="昵称",edit=false,show=true,required=true)
   private String name;
   
-  @ModelEditField(name="真实姓名")
+  @ModelEditField(name="真实姓名",show=true)
   private String realName;
 
   @ModelEditField(name="签名")

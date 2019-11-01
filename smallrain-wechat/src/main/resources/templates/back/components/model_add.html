@@ -1,4 +1,6 @@
-<div id="model_list" style="display:none;">
+
+<!-- 实体编辑公共组件 -->
+<div id="model_add" style="display:none;">
   <div>
        <div style="display: none;" :style="'display: block;'">
           <div class="buttons">
@@ -36,8 +38,8 @@
 </div>
 <script type="text/javascript">
     //注册为一个组件
-    Vue.component("model-list",{
-        template: '#model_list',
+    Vue.component("model_add",{
+        template: '#model_add',
         props: {
             model: String
         },
@@ -50,7 +52,7 @@
                 currentPage: 0, 
                 pageSizes: [10, 20, 30, 40],
                 pageSize: 20,
-                totalCount: 400
+                totalCount: 0
             }
         },
         computed: {
@@ -97,9 +99,18 @@
                that.bean = res.data.beanInfo;
             });
             //加载数据列表
-            sendRequest(that,'${domain}/api/v1/models/'+this.model.toLowerCase(),'GET',null,function(res){
-                console.log(res);
-               that.tableData = res.data;
+            let param = {};
+            sendRequest(that,'${domain}/api/v1/models/'+this.model.toLowerCase()+"/list",'POST',param,function(res){
+               console.log(res);
+               if(res.data){
+                   that.tableData = res.data.records;
+                   that.currentPage = res.data.current;
+                   that.totalCount = res.data.total;
+                   that.pageSize = res.data.size;
+               }else{
+                   console.error("请求无数据");
+               }
+               
             });
         }
     });
