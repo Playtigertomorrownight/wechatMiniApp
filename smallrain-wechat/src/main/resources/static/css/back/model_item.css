@@ -1,0 +1,52 @@
+body {
+	margin: 0;
+	padding: 0.5%;
+	width: 99%;
+	padding-right: 0.5%!importment;
+}
+
+#app {
+	padding: 10px;
+	padding-left: 20px;
+	background-color: white;
+}
+
+.el-popup-parent--hidden {
+	overflow: auto;
+}
+
+.inner_dialog {
+	
+}
+
+.inner_dialog .el-dialog__header {
+	padding: 15px 10px 15px;
+	background-color: #222222;
+	text-align: left;
+}
+
+.inner_dialog .el-dialog__title {
+	color: #f6f6f3;
+    letter-spacing: 5px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.inner_dialog .el-dialog__header label {
+	color: #f6f6f3;
+	letter-spacing: 2px;
+}
+
+.inner_dialog .el-form--label-top .el-form-item__label {
+	font-size: 15px;
+	font-weight: 700;
+	padding: 0px 0px 2px 0px;
+}
+
+.el-form-item {
+	margin-bottom: 5px;
+}
+
+.inner_table {
+	
+}

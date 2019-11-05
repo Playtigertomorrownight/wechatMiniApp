@@ -4,7 +4,7 @@
   <div>
        <div style="display: none;" :style="'display: block;'">
           <div class="buttons">
-             <el-button type="primary" icon="el-icon-plus" size="small" @click="addModel">添加{{modelName}}</el-button> 
+             <el-button type="primary" icon="el-icon-plus" size="small" @click="modelAddFormVisible = true">添加{{modelName}}</el-button> 
              <el-button type="primary" icon="el-icon-delete" :disabled="!isDeleteEnable" size="small" @click="deleteModels">批量删除{{modelName}}</el-button>
           </div>
           <div class="list_name">{{modelName}}列表</div>
@@ -34,6 +34,21 @@
               :total="totalCount">
             </el-pagination>
         </div>
+        <!-- 添加表单 -->
+        <div>
+          <el-dialog class="inner_dialog" :title="modelAddFormName" :visible.sync="modelAddFormVisible" :close-on-click-modal="false" center top="5vh" width="550px">
+              <el-form :model="modelAddForm" :rules="modelAddRules"  ref="modelAddForm" class="inner_table" size="small" label-position="left" :label-width="formLabelWidth">
+                <el-form-item  v-for="(item, index) in bean.FIELD_ITEM_LIST" v-if="bean[item].add" :key="item"
+                  :label="bean[item].name+':'" :prop="item" >
+                  <el-input v-model="modelAddForm[item]" autocomplete="off"></el-input>
+                </el-form-item>
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="modelAddFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addModel">确 定</el-button>
+              </div>
+            </el-dialog>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -52,7 +67,16 @@
                 currentPage: 0, 
                 pageSizes: [10, 20, 30, 40],
                 pageSize: 20,
-                totalCount: 0
+                totalCount: 0,
+                modelAddForm: {},
+                modelAddFormVisible: false,
+                modelAddFormName: "",
+                modelAddRules: {},
+                modelEditForm: {},
+                modelEditFormName: "",
+                modelEditRules: {},
+                formLabelWidth: '100px'
+                	
             }
         },
         computed: {
@@ -72,6 +96,7 @@
             },
             addModel() {   //添加
                 console.log("添加");
+                console.log(this.modelAddForm)
             },
             viewModel(model) {   //查看
                 console.log("查看");
@@ -95,8 +120,37 @@
             let that = this;
             sendRequest(this,'${domain}/model/info/'+this.model.toLowerCase(),'GET',null,function(res){
                 console.log(res);
-               that.modelName = res.data.modelName;
-               that.bean = res.data.beanInfo;
+                if(res.data){
+                    that.modelName = res.data.modelName;
+                    that.modelAddFormName = "添加"+that.modelName;
+                    that.modelEditFormName = "编辑"+that.modelName,
+                    that.bean = res.data.beanInfo;
+                    let addForm = {};
+                    let editForm = {};
+                    let addRules = {};
+                    let editRules = {};
+                    if(res.data.beanInfo){
+                        for(let key in res.data.beanInfo){
+                            if('FIELD_ITEM_LIST' == key) continue;
+                            if(res.data.beanInfo[key] && res.data.beanInfo[key].add){
+                                addForm[key] = '';
+                                addRules[key] = [];
+                                addRules[key].push({type: "string", required: true, pattern: ''});
+                            }
+                            if(res.data.beanInfo[key] && res.data.beanInfo[key].edit){
+                                editForm[key] = '';
+                            }
+                        }
+                        this.modelAddForm = addForm;
+                        this.modelEditForm = editForm;
+                    }
+                    console.log("add");
+                    console.log(this.modelAddForm);
+                    console.log("edit");
+                    console.log(this.modelEditForm);
+                }else{
+                    console.error("请求无数据");
+                }
             });
             //加载数据列表
             let param = {};
