@@ -8,13 +8,13 @@ import lombok.Data;
 @Data
 public class MenuDto {
 
-	@ModelEditField(name="名称",required=true,show=true)
+	@ModelEditField(name="名称",show=true,validators= {"required:true,message:菜单名称不能为空,tigger:blur"})
 	private String name;
 	
-	@ModelEditField(name="内容",required=true,show=true)
+	@ModelEditField(name="显示文本",show=true,validators= {"required:true,message:菜单显示文本不能为空,tigger:blur"})
 	private String text;
 	
-	@ModelEditField(name="类型",required=true,edit=false,show=true)
+	@ModelEditField(name="类型",edit=false,show=true,validators= {"required:true,message:菜单类型不能为空,tigger:blur"})
     private Integer type;
 
 	@ModelEditField(name="地址",show=true)
@@ -29,7 +29,7 @@ public class MenuDto {
 	@ModelEditField(name="权限",show=true)
     private String permission;
 
-	@ModelEditField(name="上级菜单ID",show=true,type=InputType.CHECKBOX)
+	@ModelEditField(name="上级菜单",show=true,type=InputType.CHECKBOX)
 	private String parentId;
 	
 	@ModelEditField(name="样式")

@@ -5,6 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.smallrain.wechat.common.manager.datasource.SelectDataType;
+
 /**
  * 用于标记需要编辑的实体属性
  * @author wangying.dz3
@@ -46,27 +48,21 @@ public @interface ModelEditField {
   int width() default 100;
   
   /**
-   * 是否必需
-   * @return
-   */
-  boolean required() default false;
-  
-  /**
-   * 长度限制
-   * @return
-   */
-  int size() default 64;
-  
-  /**
-   * 正则表达式
-   * @return
-   */
-  String pattern() default "";
-  
-  /**
    * 输入格式
    * @return
    */
   InputType type() default InputType.TEXT;
+  
+  /**
+   * 校验规则 ，形如：type:string;message:必须为字符串,tigger:blur 参考:async-validator
+   * @return
+   */
+  String [] validators() default {};
+  
+  /**
+   * 选择框所需的选择项来源
+   * @return
+   */
+  SelectDataType source() default SelectDataType.DEFAULT;
   
 }

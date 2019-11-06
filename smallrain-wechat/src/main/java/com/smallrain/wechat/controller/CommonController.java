@@ -22,22 +22,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 @Controller
 public class CommonController {
-  
-  /**
-   * 获取实体信息
-   * 
-   * @return
-   */
-  @ResponseBody
-  @GetMapping("/model/info/{modelName}")
-  public Response getModelInfo(@PathVariable String modelName) {
-    JSONObject info = DtoUtils.getModelInfo(modelName);
-    if(null==info) {
-      return Response.fail(-1, "实体信息为空，请确认名称正确");
-    }
-    return Response.success(info);
-  }
-
 	/**
 	 * 登录成功后的跳转
 	 * 
@@ -68,4 +52,19 @@ public class CommonController {
 		return mv;
 	}
 
+	/**
+   * 获取实体信息
+   * 
+   * @return
+   */
+  @ResponseBody
+  @GetMapping("/model/info/{modelName}")
+  public Response getModelInfo(@PathVariable String modelName) {
+    JSONObject info = DtoUtils.getModelInfo(modelName);
+    if(null==info) {
+      return Response.fail(-1, "实体信息为空，请确认名称正确");
+    }
+    return Response.success(info);
+  }
+  
 }
