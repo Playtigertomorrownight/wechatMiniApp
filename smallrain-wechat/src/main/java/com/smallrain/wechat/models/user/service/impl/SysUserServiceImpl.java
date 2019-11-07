@@ -1,7 +1,7 @@
 package com.smallrain.wechat.models.user.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -54,7 +54,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 			update(entity);
 		}
 		entity.setId(BaseUtils.createUuid("user"));
-		entity.setRegisterTime(LocalDateTime.now());
+		entity.setRegisterTime(new Date());
 		entity.setStatus(0);
 		EntityCheckUtil.userFieldCheck(entity);
 		// 密码加密

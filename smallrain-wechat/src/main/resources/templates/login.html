@@ -50,6 +50,11 @@
 </body>
 <script src="${domain}/javascript/md5.js"></script>
 <script>
+    (function(){
+    	if(self!=top){
+    		top.location.reload();
+    	}
+    })();
     new Vue({
       el: '#app',
       data: function() {

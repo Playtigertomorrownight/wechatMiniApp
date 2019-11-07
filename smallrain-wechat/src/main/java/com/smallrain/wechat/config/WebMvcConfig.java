@@ -43,13 +43,13 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
       super.addResourceHandlers(registry);
     }
  
-    //拦截器配置
+    //拦截器配置,对需要加公共信息的请求进行拦截
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //这里可以添加多个拦截器
         registry.addInterceptor(addAttributeInterceptor)
         .addPathPatterns("/**")
-        .excludePathPatterns("/layui/**","/login/web","/login/rest","/error/**","/swagger*/**","/webjars/**","/v2/**","/css/**","/image/**","/javascript/**","/api/**");
+        .excludePathPatterns("/druid/**","/layui/**","/login/web","/login/rest","/error/**","/swagger*/**","/webjars/**","/v2/**","/css/**","/image/**","/javascript/**","/api/**");
         super.addInterceptors(registry);
     }
 }

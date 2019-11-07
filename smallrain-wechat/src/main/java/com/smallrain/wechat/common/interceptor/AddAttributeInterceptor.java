@@ -12,6 +12,11 @@ import com.smallrain.wechat.config.ApplicationInfoProperties;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 为某些请求添加公共信息
+ * @author wangying.dz3
+ *
+ */
 @Slf4j
 @Component
 public class AddAttributeInterceptor implements HandlerInterceptor {

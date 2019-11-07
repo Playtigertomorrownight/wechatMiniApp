@@ -1,8 +1,10 @@
 package com.smallrain.wechat.models.user.entity;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -58,7 +60,7 @@ public class SysUser extends Model<SysUser> {
     private String role;
 
     @ApiModelProperty(value = "注册时间")
-    private LocalDateTime registerTime;
+    private Date registerTime;
 
     @ApiModelProperty(value = "绑定 ip ")
     private String bandIp;
